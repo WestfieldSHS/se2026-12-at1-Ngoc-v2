@@ -1,5 +1,5 @@
-database
-working_documents
+.database
+.working_documents
 static/css  
 static/icon
 static/images
