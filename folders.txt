@@ -1,0 +1,7 @@
+database
+working_documents
+static/css  
+static/icon
+static/images
+static/js
+templates
