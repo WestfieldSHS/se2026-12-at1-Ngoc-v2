@@ -1,5 +1,2 @@
-main.py 
-
-database_manager.py 
-
- 
+main.py
+database_manager.py

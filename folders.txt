@@ -1,6 +1,6 @@
 .database
 .working_documents
-static/css  
+static/css
 static/icon
 static/images
 static/js
