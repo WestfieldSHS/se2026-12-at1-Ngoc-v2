@@ -1,0 +1,12 @@
+This manifest.json acts as sort of like a notes for my pwa project for when someone wants to install my website. 
+Before the browser actually look at my codes it will look at my manifestjson files to check if the website is installable, 
+the browser then display this info to the user. WIthout the jsonfile, the browser do not know what the app is called and the install button wont 
+appear for the user to install 
+
+name = shown on big screen
+shortname = shown on small screen like phone
+start_url = which page open when the app is installed
+display (standalone) = when the app is install, the user will not see the back and foraward arrown and the search bar and stuff of the browser, just the app alone. 
+backgroundcolor: the colour that is hsown whne the app is loading. 
+themecolour:the top bar colour
+icons: the big icon is for desktop and such and the small icon is for phone 

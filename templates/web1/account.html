@@ -1,0 +1,72 @@
+<!DOCTYPE html> <!-- Declares that this is an HTML5 document -->
+<html lang="en"> <!-- Starts the HTML document in English -->
+<head> <!-- Container for settings and metadata -->
+    <meta charset="UTF-8"> <!-- Allows all characters to display correctly -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- Ensures the page is mobile responsive -->
+    <title>Apply Now - Create Account</title> <!-- Tab title -->
+        <link rel="icon" href="/static/images/icon.png" type="image/png" />  <!-- Tells the browser to use icon.png as the tab icon.-->   
+    <link rel="manifest" href="/static/manifest.json"> <!-- Tells the browser where to find PWA settings for install -->
+    <link rel="stylesheet" href="/static/css/style.css"> <!-- Links to your CSS file for styling -->
+</head> <!-- Closes the head section -->
+<body> <!-- Starts the visible content -->
+
+    <header class="navbar"> <!-- Main blue navigation bar -->
+        <div class="nav-left"> <!-- Groups Logo and Search Bar -->
+            <div class="logo">
+                <img src="/static/images/icon.png" alt="TutorMatch Logo" height="50">
+            </div>
+            <!-- Search Bar removed from here to clean up the registration process -->
+        </div> <!-- End nav-left -->
+
+        <nav class="nav-right"> <!-- Navigation links on the right -->
+            <a href="/">Main Menu</a> <!-- Link to home -->
+            <a href="/account">Apply Now</a> <!-- Current page link -->
+            <a href="/about">About Us</a> <!-- Link to tutors page -->
+        </nav> <!-- End nav-right -->
+    </header> <!-- End header -->
+
+    <nav class="steps-bar" style="text-align: center; padding: 20px; background: #e0e0e0;"> <!-- Grey bar showing progress -->
+        <strong style="color: #4a90d9;">Account</strong> | 
+        <span>Class</span> | 
+        <span>Quiz</span> | 
+        <span>Final</span>
+    </nav> <!-- End progress bar -->
+
+    <main class="hero"> <!-- Main container styled as a hero banner for consistency -->
+        <h1>Create Your Account</h1> <!-- Page heading -->
+        
+        <form action="/class" method="POST" style="max-width: 400px; margin: 0 auto; text-align: left;"> <!-- Form gets(this is a more secret version of post where the url will look more clean) data to the next step via URL -->
+            
+            <label>Full Name of Student:</label><br> <!-- Label for name input -->
+            <input type="text" name="fullname" required style="width: 100%; padding: 10px; margin-top: 5px; border-radius: 5px; border: 1px solid #ccc;"><br><br> <!-- Name input field -->
+
+            <label>Email:</label><br> <!-- Label for email input -->
+            <input type="email" name="email" required style="width: 100%; padding: 10px; margin-top: 5px; border-radius: 5px; border: 1px solid #ccc;"><br><br> <!-- Email input field -->
+
+            <label>Username:</label><br> <!-- Label for username input -->
+            <input type="text" name="username" required style="width: 100%; padding: 10px; margin-top: 5px; border-radius: 5px; border: 1px solid #ccc;"><br><br> <!-- Username input field -->
+
+            <label>Password (min 7 characters):</label><br> <!-- Label for password input -->
+            <input type="password" name="password" minlength="7" required style="width: 100%; padding: 10px; margin-top: 5px; border-radius: 5px; border: 1px solid #ccc;"><br><br> <!-- Password input field -->
+
+            <button type="submit" style="width: 100%; padding: 15px; background: #4a90d9; color: white; border: none; border-radius: 5px; font-weight: bold; cursor: pointer;">Next: Select Class</button> <!-- Submit button to go to step 2 -->
+        </form> <!-- End registration form -->
+    </main> <!-- End main -->
+
+    <footer class="footer"> <!-- Contact info bar at the absolute bottom -->
+        <p>Not sure about something? <strong>Contact us!</strong></p> <!-- Call to action -->
+        <p>Phone: 0400 000 000 | Email: info@tutors.com</p> <!-- Specific contact info -->
+    </footer> <!-- End footer -->
+    <script> <!-- Starts the JavaScript section to register the background worker -->
+    if ('serviceWorker' in navigator) { // Checks if the browser supports service workers
+        navigator.serviceWorker.register('/service-worker.js') // Tells browser to activate your service worker file
+        .then(function() { // Logic that runs if the registration is successful
+            console.log('Service Worker registered successfully!'); // Prints success message to the browser console
+        }) // Ends the success logic
+        .catch(function(error) { // Logic that runs if there is an error during registration
+            console.log('Service Worker registration failed:', error); // Prints the error details to the console
+        }); // Ends the error logic
+    } // Ends the browser check
+    </script> <!-- Ends the service worker registration script -->
+</body> <!-- Closes body -->
+</html> <!-- Closes HTML -->

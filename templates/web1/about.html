@@ -1,0 +1,95 @@
+<!DOCTYPE html> <!-- Declares that this is an HTML5 document -->
+<html lang="en"> <!-- Starts the HTML document in English -->
+<head> <!-- Container for metadata and settings -->
+    <meta charset="UTF-8"> <!-- Allows all characters to display correctly -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- Makes the site mobile responsive -->
+    <title>About Us - Our Tutors</title> <!-- Sets the browser tab title -->
+    <link rel="manifest" href="/static/manifest.json"> <!-- Tells the browser where to find PWA settings for install -->
+    <link rel="icon" href="/static/images/icon.png" type="image/png" />  <!-- Tells the browser to use icon.png as the tab icon.-->   
+    <link rel="stylesheet" href="/static/css/style.css"> <!-- Links to your CSS file for styling -->
+</head> <!-- Closes the head section -->
+<body> <!-- Starts the visible content of the page -->
+
+    <header class="navbar"> <!-- Main blue navigation bar -->
+        <div class="nav-left"> <!-- Groups Logo and Search together on the left -->
+            <div class="logo">
+                <img src="/static/images/icon.png" alt="TutorMatch Logo" height="50">
+            </div>
+            <div class="search-bar"> <!-- Search container -->
+                <input type="text" id="tutorSearch" placeholder="Search tutors..." onkeyup="filterTutors()"> <!-- Real-time search input -->
+            </div> <!-- End search-bar -->
+        </div> <!-- End nav-left -->
+
+        <nav class="nav-right"> <!-- Navigation links on the right -->
+            <a href="/">Main Menu</a> <!-- Link to home page -->
+            <a href="/account">Apply Now</a> <!-- Link to application start -->
+            <a href="/about">About Us</a> <!-- Link to refresh the tutor list -->
+        </nav> <!-- End nav-right -->
+    </header> <!-- End header -->
+
+    <main> <!-- Middle section of the page -->
+        <section class="hero"> <!-- Main banner section -->
+            <h1>Why Choose Us?</h1> <!-- Page main heading -->
+            <p>We have all the teachers that will personalise your learning!</p> <!-- Descriptive paragraph -->
+        </section> <!-- End hero -->
+
+        <section class="tutors-section"> <!-- Section for tutor list -->
+            <h2 style="text-align: center; margin-bottom: 20px;">All of Our Tutors:</h2> <!-- Centered section title -->
+            <div class="tutor-grid"> <!-- Container for organized tutor cards -->
+                <!-- Starts the loop to display every tutor in the database -->
+            {% for tutor in tutors %}
+            <!-- Individual tutor card container -->
+            <div class="tutor-card">
+                <!-- THE FIX: Displays the tutor's photo using the filename from index [2] -->
+                <img src="/static/images/{{ tutor[2] }}" alt="{{ tutor[1] }}" class="tutor-thumb">
+                
+                <!-- Container for the text details next to the photo -->
+                <div class="tutor-info">
+                    <!-- THE FIX: Displays the Full Name from index [1] -->
+                    <h3>{{ tutor[1] }}</h3>
+                    <!-- THE FIX: Displays the Biography from index [5] instead of a filename -->
+                    <p><strong>About:</strong> {{ tutor[5] }}</p>
+                    <!-- Displays the email address from index [3] with an icon -->
+                    <p>📧 {{ tutor[3] }}</p>
+                </div>
+            </div>
+            <!-- Ends the tutor loop -->
+            {% endfor %}
+            </div> <!-- End tutor-grid -->
+        </section> <!-- End tutors-section -->
+    </main> <!-- End main -->
+
+    <footer class="footer"> <!-- Bottom bar for contact info -->
+        <p>Not sure about something? <strong>Contact us!</strong></p> <!-- Bold call to action -->
+        <p>Phone: 0400 000 000 | Email: info@tutors.com</p> <!-- Actual contact details -->
+    </footer> <!-- End footer -->
+
+    <script> // Starts the JavaScript section
+    function filterTutors() { // Function to search tutors in real-time
+        let input = document.getElementById('tutorSearch').value.toLowerCase(); // Gets search text
+        let cards = document.getElementsByClassName('tutor-card'); // Gets all cards
+
+        for (let i = 0; i < cards.length; i++) { // Loops through cards
+            let name = cards[i].getElementsByTagName('h3')[0].innerText.toLowerCase(); // Gets the tutor name
+            
+            if (name.includes(input)) { // Checks for a match
+                cards[i].style.display = ""; // Shows card if matched
+            } else { // No match found
+                cards[i].style.display = "none"; // Hides card if no match
+            } // End if/else
+        } // End for loop
+    } // End function
+    </script> <!-- Correctly closes the script tag -->
+    <script> <!-- Starts the JavaScript section to register the background worker -->
+    if ('serviceWorker' in navigator) { // Checks if the browser supports service workers
+        navigator.serviceWorker.register('/service-worker.js') // Tells browser to activate your service worker file
+        .then(function() { // Logic that runs if the registration is successful
+            console.log('Service Worker registered successfully!'); // Prints success message to the browser console
+        }) // Ends the success logic
+        .catch(function(error) { // Logic that runs if there is an error during registration
+            console.log('Service Worker registration failed:', error); // Prints the error details to the console
+        }); // Ends the error logic
+    } // Ends the browser check
+    </script> <!-- Ends the service worker registration script -->
+</body> <!-- Closes the body -->
+</html> <!-- Closes the HTML document -->
