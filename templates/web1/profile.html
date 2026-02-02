@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>My Profile</title>
+    <link rel="stylesheet" href="/static/css/style.css" />
+  </head>
+  <body>
+    <header class="navbar">
+      <div class="logo">Profile</div>
+      <nav class="nav-right"><a href="/">Home</a></nav>
+    </header>
+    <main class="hero">
+      <h1>Welcome, {{ user['name'] }}!</h1>
+      <div
+        style="
+          max-width: 450px;
+          margin: 20px auto;
+          text-align: left;
+          background: white;
+          padding: 30px;
+          border-radius: 10px;
+          box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        "
+      >
+        <p><strong>Username:</strong> {{ user['username'] }}</p>
+        <p><strong>Email:</strong> {{ user['email'] }}</p>
+        <hr style="margin: 15px 0" />
+        <p><strong>Enrolled Course:</strong> {{ user['course_name'] }}</p>
+        <p><strong>Study Time:</strong> {{ user['time_slot'] }}</p>
+        <p><strong>Assigned Tutor:</strong> {{ user['tutor_name'] }}</p>
+      </div>
+    </main>
+  </body>
+</html>

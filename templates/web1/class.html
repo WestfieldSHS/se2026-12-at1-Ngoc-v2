@@ -1,74 +1,220 @@
-<!DOCTYPE html> <!-- Declares this as an HTML5 document for the browser -->
-<html lang="en"> <!-- Starts the HTML document and sets language to English -->
-<head> <!-- Container for metadata and settings that do not show on the page -->
-    <meta charset="UTF-8"> <!-- Allows the page to display all characters correctly -->
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- Makes the page responsive for mobile screens -->
-    <title>Select Class - Personalise Your Learning</title> <!-- Sets the text shown in the browser tab -->
-        <link rel="icon" href="/static/images/icon.png" type="image/png" />  <!-- Tells the browser to use icon.png as the tab icon.-->   
-    <link rel="manifest" href="/static/manifest.json"> <!-- Tells the browser where to find PWA settings for install -->
-    <link rel="stylesheet" href="/static/css/style.css"> <!-- Links to your CSS file for colors and layout -->
-</head> <!-- Closes the head section -->
-<body> <!-- Starts the visible portion of the website content -->
-    <header class="navbar"> <!-- Top section of the page used for the navigation bar -->
-        <div class="nav-left"> <!-- Grouping container to keep the Logo on the left side -->
-            <div class="logo">
-                <img src="/static/images/icon.png" alt="TutorMatch Logo" height="50">
-            </div>
-        </div> <!-- Closes the nav-left grouping container -->
-        <nav class="nav-right"> <!-- A section specifically for website navigation links -->
-            <a href="/">Main Menu</a> <!-- Link that takes the user back to the home page -->
-            <a href="/account">Apply Now</a> <!-- Link that returns the user to the start of the application -->
-            <a href="/about">About Us</a> <!-- Link to the page showing tutor information -->
-        </nav> <!-- Ends the navigation link section -->
-    </header> <!-- Ends the header section -->
-    <nav class="steps-bar" style="text-align: center; padding: 20px; background: #e0e0e0; font-weight: bold;"> <!-- Progress bar container -->
-        <span style="color: #888;">Account</span> | <!-- Previous step marked in grey -->
-        <span style="color: #4a90d9;">Class</span> | <!-- Current step highlighted in blue -->
-        <span style="color: #888;">Quiz</span> | <!-- Future step in grey -->
-        <span style="color: #888;">Final</span> <!-- Final step in grey -->
-    </nav> <!-- Ends the progress bar container -->
-    <main class="hero"> <!-- Main content area styled as a hero banner for consistency -->
-        <h1>Select Your Class</h1> <!-- The primary heading for this application step -->
-        <form action="/quiz" method="POST" style="max-width: 450px; margin: 0 auto; text-align: left; background: white; padding: 30px; border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);"> <!-- Form starts -->
-            <input type="hidden" name="fullname" value="{{ fullname }}"> <!-- Carries student name invisibly -->
-            <input type="hidden" name="email" value="{{ email }}"> <!-- Carries student email invisibly -->
-            <input type="hidden" name="username" value="{{ username }}"> <!-- Carries student username invisibly -->
-            <input type="hidden" name="password" value="{{ password }}"> <!-- Carries student password invisibly -->
-            <label style="font-weight: bold;">Select Course(s):</label><br> <!-- Label for course dropdown -->
-            <select name="course_id" required style="width: 100%; padding: 12px; margin: 10px 0; border-radius: 5px; border: 1px solid #ccc;"> <!-- Dropdown for courses -->
-                <option value="">-- Select --</option> <!-- Default empty option -->
-                {% for course in courses %} <!-- Loops through courses from the database -->
-                <option value="{{ course[0] }}">{{ course[1] }}</option> <!-- Adds course name from database -->
-                {% endfor %} <!-- Ends course loop -->
-            </select><br><br> <!-- Closes course group -->
-            <label style="font-weight: bold;">Select Time(s):</label><br> <!-- Label for time selection -->
-            <select name="time" required style="width: 100%; padding: 12px; margin: 10px 0; border-radius: 5px; border: 1px solid #ccc;"> <!-- Dropdown for time slots -->
-                <option value="">-- Select --</option> <!-- Default empty option -->
-                <!-- Values below now include the actual hours to display on the final page -->
-                <option value="Morning (9am - 12pm)">Morning (9am - 12pm)</option> <!-- Morning with hours -->
-                <option value="Afternoon (1pm - 4pm)">Afternoon (1pm - 4pm)</option> <!-- Afternoon with hours -->
-                <option value="Evening (5pm - 8pm)">Evening (5pm - 8pm)</option> <!-- Evening with hours -->
-            </select><br><br> <!-- Closes time group -->
-            <div style="display: flex; gap: 10px;"> <!-- Flex container for buttons -->
-                <a href="/account" style="flex: 1; text-align: center; padding: 15px; background: #ccc; color: #333; text-decoration: none; border-radius: 5px; font-weight: bold;">Back</a> <!-- Back button -->
-                <button type="submit" style="flex: 2; padding: 15px; background: #4a90d9; color: white; border: none; border-radius: 5px; font-weight: bold; cursor: pointer;">Next: Select Tutor</button> <!-- Submit button -->
-            </div> <!-- Ends buttons -->
-        </form> <!-- Ends form -->
-    </main> <!-- Ends main content -->
-    <footer class="footer"> <!-- Bottom section for contact info -->
-        <p>Not sure about something? <strong>Contact us!</strong></p> <!-- Text with bold emphasis -->
-        <p>Phone: 0400 000 000 | Email: info@tutors.com</p> <!-- Displays contact info -->
-    </footer> <!-- Ends footer -->
-    <script> <!-- Starts the JavaScript section to register the background worker -->
-    if ('serviceWorker' in navigator) { // Checks if the browser supports service workers
-        navigator.serviceWorker.register('/service-worker.js') // Tells browser to activate your service worker file
-        .then(function() { // Logic that runs if the registration is successful
-            console.log('Service Worker registered successfully!'); // Prints success message to the browser console
-        }) // Ends the success logic
-        .catch(function(error) { // Logic that runs if there is an error during registration
-            console.log('Service Worker registration failed:', error); // Prints the error details to the console
-        }); // Ends the error logic
-    } // Ends the browser check
-    </script> <!-- Ends the service worker registration script -->
-</body> <!-- Ends body -->
-</html> <!-- Ends HTML -->
+<!doctype html>
+<!-- Declares this as an HTML5 document -->
+<html lang="en">
+  <!-- Sets language to English for screen readers -->
+  <head>
+    <!-- Metadata section -->
+    <meta charset="UTF-8" />
+    <!-- Allows special characters -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Mobile responsiveness -->
+    <title>Select Class - Personalise Your Learning</title>
+    <!-- Tab title -->
+    <link rel="icon" href="/static/images/icon.png" type="image/png" />
+    <!-- Tab icon -->
+    <link rel="manifest" href="/static/manifest.json" />
+    <!-- PWA settings -->
+    <link rel="stylesheet" href="/static/css/style.css" />
+    <!-- External CSS -->
+  </head>
+  <!-- Closes head -->
+  <body>
+    <!-- Starts visible content -->
+
+    <!-- ACCESSIBILITY: Skip link for keyboard users (SE-12-02) -->
+    <a
+      href="#main-content"
+      class="skip-link"
+      style="
+        position: absolute;
+        left: -10000px;
+        top: auto;
+        width: 1px;
+        height: 1px;
+        overflow: hidden;
+      "
+      >Skip to main content</a
+    >
+
+    <header class="navbar">
+      <!-- Navigation bar -->
+      <div class="nav-left">
+        <!-- Logo container -->
+        <div class="logo">
+          <img
+            src="/static/images/icon.png"
+            alt="TutorMatch logo"
+            height="50"
+          />
+        </div>
+      </div>
+      <!-- End nav-left -->
+      <nav class="nav-right" aria-label="Main Site Navigation">
+        <!-- Labeled nav -->
+        <a href="/">Main Menu</a>
+        <!-- Home link -->
+        <a href="/account">Apply Now</a>
+        <!-- Account link -->
+        <a href="/about">About Us</a>
+        <!-- About link -->
+      </nav>
+      <!-- End nav -->
+    </header>
+    <!-- End header -->
+
+    <nav
+      class="steps-bar"
+      style="
+        text-align: center;
+        padding: 20px;
+        background: #e0e0e0;
+        font-weight: bold;
+      "
+      aria-label="Registration Progress"
+    >
+      <span style="color: #888">Account</span> |
+      <span style="color: #4a90d9">Class</span> |
+      <span style="color: #888">Quiz</span> |
+      <span style="color: #888">Final</span>
+    </nav>
+    <!-- End progress bar -->
+
+    <main class="hero" id="main-content">
+      <!-- Main landmark for skip link -->
+      <h1>Select Your Class</h1>
+      <form
+        action="/quiz"
+        method="POST"
+        style="
+          max-width: 450px;
+          margin: 0 auto;
+          text-align: left;
+          background: white;
+          padding: 30px;
+          border-radius: 10px;
+          box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        "
+      >
+        <input type="hidden" name="fullname" value="{{ fullname }}" />
+        <!-- Hidden data -->
+        <input type="hidden" name="email" value="{{ email }}" />
+        <!-- Hidden data -->
+        <input type="hidden" name="username" value="{{ username }}" />
+        <!-- Hidden data -->
+        <input type="hidden" name="password" value="{{ password }}" />
+        <!-- Hidden data -->
+
+        <!-- ACCESSIBILITY: Label linked to select via 'for' and 'id' -->
+        <label
+          for="course_id"
+          style="font-weight: bold; display: block; margin-bottom: 5px"
+          >Select Course(s):</label
+        >
+        <select
+          id="course_id"
+          name="course_id"
+          required
+          style="
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+          "
+        >
+          <option value="">-- Select --</option>
+          {% for course in courses %}
+          <option value="{{ course[0] }}">{{ course[1] }}</option>
+          {% endfor %}
+        </select>
+
+        <!-- ACCESSIBILITY: Label linked to select via 'for' and 'id' -->
+        <label
+          for="time"
+          style="font-weight: bold; display: block; margin-bottom: 5px"
+          >Select Time(s):</label
+        >
+        <select
+          id="time"
+          name="time"
+          required
+          style="
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+          "
+        >
+          <option value="">-- Select --</option>
+          <option value="Morning (9am - 12pm)">Morning (9am - 12pm)</option>
+          <option value="Afternoon (1pm - 4pm)">Afternoon (1pm - 4pm)</option>
+          <option value="Evening (5pm - 8pm)">Evening (5pm - 8pm)</option>
+        </select>
+
+        <div style="display: flex; gap: 10px">
+          <!-- ACCESSIBILITY: Increased contrast for the Back button (Black text on grey) -->
+          <a
+            href="/account"
+            style="
+              flex: 1;
+              text-align: center;
+              padding: 15px;
+              background: #cccccc;
+              color: #000000;
+              text-decoration: none;
+              border-radius: 5px;
+              font-weight: bold;
+            "
+            aria-label="Return to account details page"
+            >Back</a
+          >
+
+          <button
+            type="submit"
+            style="
+              flex: 2;
+              padding: 15px;
+              background: #4a90d9;
+              color: white;
+              border: none;
+              border-radius: 5px;
+              font-weight: bold;
+              cursor: pointer;
+            "
+            aria-label="Confirm selection and move to tutor selection quiz"
+          >
+            Next: Select Tutor
+          </button>
+        </div>
+        <!-- End button group -->
+      </form>
+      <!-- End form -->
+    </main>
+    <!-- End main -->
+
+    <footer class="footer">
+      <!-- Contact info -->
+      <p>Not sure about something? <strong>Contact us!</strong></p>
+      <p>Phone: 0400 000 000 | Email: info@tutors.com</p>
+    </footer>
+    <!-- End footer -->
+
+    <script>
+      if ("serviceWorker" in navigator) {
+        // Register service worker
+        navigator.serviceWorker
+          .register("/service-worker.js")
+          .then(function () {
+            console.log("Service Worker registered!");
+          })
+          .catch(function (error) {
+            console.log("Failed:", error);
+          });
+      }
+    </script>
+    <!-- End script -->
+  </body>
+  <!-- Ends body -->
+</html>
+<!-- Ends HTML -->

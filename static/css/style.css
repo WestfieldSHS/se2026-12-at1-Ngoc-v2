@@ -1,120 +1,140 @@
 /* =========================================
    GENERAL RESET - Cleans default browser spacing
    ========================================= */
-* { /* Selects every single element on the page */
-    margin: 0; /* Removes default outer spacing */
-    padding: 0; /* Removes default inner spacing */
-    box-sizing: border-box; /* Includes padding in width calculations to prevent layout breaks */
+* {
+  /* Selects every single element on the page */
+  margin: 0; /* Removes default outer spacing */
+  padding: 0; /* Removes default inner spacing */
+  box-sizing: border-box; /* Includes padding in width calculations to prevent layout breaks */
 } /* Ends universal reset */
 
-body { /* Styles the entire page container */
-    font-family: Arial, sans-serif; /* Sets a professional, clean font */
-    background-color: #f5f5f5; /* Light grey background to make cards pop */
-    line-height: 1.6; /* Adds vertical space between text lines for readability */
-    display: flex; /* Enables flexbox for the whole page layout */
-    flex-direction: column; /* Stacks header, main, and footer vertically */
-    min-height: 100vh; /* Forces the page to be at least the full height of the screen */
+body {
+  /* Styles the entire page container */
+  font-family: Arial, sans-serif; /* Sets a professional, clean font */
+  background-color: #f5f5f5; /* Light grey background to make cards pop */
+  line-height: 1.6; /* Adds vertical space between text lines for readability */
+  display: flex; /* Enables flexbox for the whole page layout */
+  flex-direction: column; /* Stacks header, main, and footer vertically */
+  min-height: 100vh; /* Forces the page to be at least the full height of the screen */
 } /* Ends body styling */
 
 /* =========================================
    NAVIGATION BAR - Top Blue Header
    ========================================= */
-.navbar { /* The main container for the top navigation */
-    display: flex; /* Aligns child elements in a row */
-    justify-content: space-between; /* Pushes the logo-group and links to opposite ends */
-    align-items: center; /* Vertically centers everything in the blue bar */
-    padding: 15px 30px; /* Adds 15px top/bottom and 30px left/right spacing */
-    background-color: #4a90d9; /* The primary blue brand color */
-    color: white; /* Sets default text color to white */
+.navbar {
+  /* The main container for the top navigation */
+  display: flex; /* Aligns child elements in a row */
+  justify-content: space-between; /* Pushes the logo-group and links to opposite ends */
+  align-items: center; /* Vertically centers everything in the blue bar */
+  padding: 15px 30px; /* Adds 15px top/bottom and 30px left/right spacing */
+  background-color: #3b7ec4; /*dark blue for improve accesibilities:) */
+  font-weight: bold; /*bold text make it easier for read to improve accessibilities*/
+  color: white; /* Sets default text color to white */
 } /* Ends navbar styling */
 
-.nav-left { /* Groups the Logo and Search Bar together */
-    display: flex; /* Places logo and search side-by-side */
-    align-items: center; /* Centers them vertically */
-    gap: 25px; /* Adds clear space between the logo and the search box */
+.nav-left {
+  /* Groups the Logo and Search Bar together */
+  display: flex; /* Places logo and search side-by-side */
+  align-items: center; /* Centers them vertically */
+  gap: 25px; /* Adds clear space between the logo and the search box */
 } /* Ends nav-left group */
 
-#tutorSearch { /* Styles the search input specifically by ID */
-    width: 300px; /* Sets a fixed width for the search box */
-    padding: 8px 15px; /* Internal spacing for text readability */
-    border-radius: 20px; /* Creates the rounded oval shape from your storyboard */
-    border: none; /* Removes default grey borders */
-    outline: none; /* Prevents the blue outline when clicking the box */
+#tutorSearch {
+  /* Styles the search input specifically by ID */
+  width: 300px; /* Sets a fixed width for the search box */
+  padding: 8px 15px; /* Internal spacing for text readability */
+  border-radius: 20px; /* Creates the rounded oval shape from your storyboard */
+  border: none; /* Removes default grey borders */
+  outline: none; /* Prevents the blue outline when clicking the box */
 } /* Ends search box styling */
 
-.nav-right a { /* Styles the clickable links on the right side */
-    color: white; /* Links appear in white */
-    text-decoration: none; /* Removes default blue underlines */
-    margin-left: 20px; /* Adds space between each link */
-    font-weight: bold; /* Makes links stand out */
+.nav-right a {
+  /* Styles the clickable links on the right side */
+  color: white; /* Links appear in white */
+  text-decoration: none; /* Removes default blue underlines */
+  margin-left: 20px; /* Adds space between each link */
+  font-weight: bold; /* Makes links stand out */
 } /* Ends nav-link styling */
 
 /* =========================================
    HERO SECTION - Main Page Banner
    ========================================= */
-main { /* The container for all content between header and footer */
-    flex: 1; /* THE FIX: This pushes the footer to the absolute bottom of the screen */
+main {
+  /* The container for all content between header and footer */
+  flex: 1; /* THE FIX: This pushes the footer to the absolute bottom of the screen */
 } /* Ends main container styling */
 
-.hero { /* Styles the centered banner on Home and About pages */
-    text-align: center; /* Centers all text and buttons */
-    padding: 60px 20px; /* Adds large vertical padding */
-    background-color: white; /* Clean white background */
-    margin: 20px; /* Adds space outside the banner */
-    border-radius: 10px; /* Rounded corners */
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1); /* Subtle shadow for depth */
+.hero {
+  /* Styles the centered banner on Home and About pages */
+  text-align: center; /* Centers all text and buttons */
+  padding: 60px 20px; /* Adds large vertical padding */
+  background-color: white; /* Clean white background */
+  margin: 20px; /* Adds space outside the banner */
+  border-radius: 10px; /* Rounded corners */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
 } /* Ends hero styling */
 
 /* =========================================
    TUTOR GRID AND CARDS - The Core UI
    ========================================= */
-.tutor-grid { /* Defines how tutor cards are organized on the screen */
-    display: grid; /* Uses CSS Grid for structure */
-    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr)); /* Responsively fits cards to screen size */
-    gap: 25px; /* Spacing between cards */
-    max-width: 1200px; /* Prevents cards from stretching too wide on desktops */
-    margin: 20px auto; /* Centers the grid on the page */
-    padding: 0 20px; /* Horizontal padding for mobile screens */
+.tutor-grid {
+  /* Defines how tutor cards are organized on the screen */
+  display: grid; /* Uses CSS Grid for structure */
+  grid-template-columns: repeat(
+    auto-fill,
+    minmax(350px, 1fr)
+  ); /* Responsively fits cards to screen size */
+  gap: 25px; /* Spacing between cards */
+  max-width: 1200px; /* Prevents cards from stretching too wide on desktops */
+  margin: 20px auto; /* Centers the grid on the page */
+  padding: 0 20px; /* Horizontal padding for mobile screens */
 } /* Ends grid styling */
 
-.tutor-card { /* Individual white card for each tutor */
-    display: flex; /* THE FIX: Enables horizontal alignment for image and text */
-    flex-direction: row; /* Forces image on the left and text on the right */
-    align-items: center; /* Vertically centers the image and name */
-    background-color: white; /* Card color */
-    padding: 20px; /* Space inside the card */
-    border-radius: 12px; /* Smooth rounded corners */
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1); /* Visible card shadow */
-    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Enables the hover "pop" animation */
-    gap: 20px; /* Adds space between the photo and the tutor info */
-    cursor: pointer; /* Shows a hand icon when hovering */
+.tutor-card {
+  /* Individual white card for each tutor */
+  display: flex; /* THE FIX: Enables horizontal alignment for image and text */
+  flex-direction: row; /* Forces image on the left and text on the right */
+  align-items: center; /* Vertically centers the image and name */
+  background-color: white; /* Card color */
+  padding: 20px; /* Space inside the card */
+  border-radius: 12px; /* Smooth rounded corners */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Visible card shadow */
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease; /* Enables the hover "pop" animation */
+  gap: 20px; /* Adds space between the photo and the tutor info */
+  cursor: pointer; /* Shows a hand icon when hovering */
 } /* Ends tutor-card styling */
 
-.tutor-card:hover { /* Visual changes when user hovers over a card */
-    transform: translateY(-10px); /* Lifts the card up by 10 pixels */
-    box-shadow: 0 10px 20px rgba(0,0,0,0.2); /* Makes the shadow deeper and more realistic */
+.tutor-card:hover {
+  /* Visual changes when user hovers over a card */
+  transform: translateY(-10px); /* Lifts the card up by 10 pixels */
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2); /* Makes the shadow deeper and more realistic */
 } /* Ends hover effect */
 
-.tutor-thumb { /* Styles the tutor's circular profile photo */
-    width: 80px; /* Standardised width for all photos */
-    height: 80px; /* Standardised height for all photos */
-    border-radius: 50%; /* Crops the image into a perfect circle */
-    object-fit: cover; /* Prevents the photo from looking squashed or stretched */
-    border: 3px solid #4a90d9; /* Thematic blue border around the photo */
-    flex-shrink: 0; /* Prevents the image from being squished by long text */
+.tutor-thumb {
+  /* Styles the tutor's circular profile photo */
+  width: 80px; /* Standardised width for all photos */
+  height: 80px; /* Standardised height for all photos */
+  border-radius: 50%; /* Crops the image into a perfect circle */
+  object-fit: cover; /* Prevents the photo from looking squashed or stretched */
+  border: 3px solid #4a90d9; /* Thematic blue border around the photo */
+  flex-shrink: 0; /* Prevents the image from being squished by long text */
 } /* Ends thumbnail styling */
 
-.tutor-info { /* The container for tutor name and details */
-    text-align: left; /* Aligns text to the left side next to the photo */
+.tutor-info {
+  /* The container for tutor name and details */
+  text-align: left; /* Aligns text to the left side next to the photo */
 } /* Ends info styling */
 
 /* =========================================
    FOOTER - Contact Bar
    ========================================= */
-.footer { /* The dark bar at the very bottom of the page */
-    text-align: center; /* Centers all contact info */
-    padding: 30px; /* Adds breathing space inside the bar */
-    background-color: #333; /* Dark charcoal background */
-    color: white; /* Text appears in white */
-    width: 100%; /* Ensures the footer spans the full screen width */
+.footer {
+  /* The dark bar at the very bottom of the page */
+  text-align: center; /* Centers all contact info */
+  padding: 30px; /* Adds breathing space inside the bar */
+  background-color: #333; /* Dark charcoal background */
+  color: white; /* Text appears in white */
+  width: 100%; /* Ensures the footer spans the full screen width */
 } /* Ends footer styling */

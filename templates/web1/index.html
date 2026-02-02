@@ -1,88 +1,198 @@
-<!DOCTYPE html> <!-- Declares this is an HTML5 document -->
-<html lang="en"> <!-- Sets language to English -->
-<head> <!-- Container for metadata -->
-    <meta charset="UTF-8"> <!-- Allows special characters -->
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- Mobile responsiveness -->
-    <title>Home - Personalise Your Learning</title> <!-- Tab title -->
-        <link rel="icon" href="/static/images/icon.png" type="image/png" />  <!-- Tells the browser to use icon.png as the tab icon.-->   
-    <link rel="manifest" href="/static/manifest.json"> <!-- Tells the browser where to find PWA settings for install -->
-    <link rel="stylesheet" href="/static/css/style.css"> <!-- Links the CSS styling -->
-</head> <!-- Closes head -->
-<body> <!-- Starts visible content -->
+<!doctype html>
+<!-- Declares this is an HTML5 document -->
+<html lang="en">
+  <!-- Sets language to English for screen readers -->
+  <head>
+    <!-- Container for metadata -->
+    <meta charset="UTF-8" />
+    <!-- Allows special characters -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Mobile responsiveness -->
+    <title>Home - Personalise Your Learning</title>
+    <!-- Tab title -->
+    <link rel="icon" href="/static/images/icon.png" type="image/png" />
+    <!-- Tab icon -->
+    <link rel="manifest" href="/static/manifest.json" />
+    <!-- PWA manifest -->
+    <link rel="stylesheet" href="/static/css/style.css" />
+    <!-- External CSS -->
+  </head>
+  <!-- Closes head -->
+  <body>
+    <!-- Starts visible content -->
 
-    <header class="navbar"> <!-- Blue navigation bar -->
-        <div class="nav-left"> <!-- Groups Logo and Search together -->
-            <div class="logo">
-                <img src="/static/images/icon.png" alt="TutorMatch Logo" height="50">
+    <!-- ACCESSIBILITY: Skip link for keyboard users (SE-12-02) -->
+    <a
+      href="#main-content"
+      class="skip-link"
+      style="
+        position: absolute;
+        left: -10000px;
+        top: auto;
+        width: 1px;
+        height: 1px;
+        overflow: hidden;
+      "
+      >Skip to main content</a
+    >
+
+    <header class="navbar">
+      <!-- Top navigation bar -->
+      <div class="nav-left">
+        <!-- Groups Logo and Search -->
+        <div class="logo">
+          <!-- ACCESSIBILITY: Descriptive alt text -->
+          <img
+            src="/static/images/icon.png"
+            alt="TutorMatch official company logo"
+            height="50"
+          />
+        </div>
+        <div class="search-bar">
+          <!-- Search container -->
+          <!-- ACCESSIBILITY: aria-label describes the input without a visible tag -->
+          <input
+            type="text"
+            id="tutorSearch"
+            placeholder="Search tutors..."
+            onkeyup="filterTutors()"
+            aria-label="Search for a tutor by name"
+          />
+        </div>
+        <!-- End search-bar -->
+      </div>
+      <!-- End nav-left -->
+
+      <!-- ACCESSIBILITY: aria-label identifies this specific navigation block -->
+      <nav class="nav-right" aria-label="Main Site Navigation">
+        <a href="/">Main Menu</a>
+        <!-- Home link -->
+        <a href="/account">Apply Now</a>
+        <!-- Signup link -->
+        <a href="/about">About Us</a>
+        <!-- About link -->
+        <a href="/login">Login</a>
+        <!-- Login link -->
+      </nav>
+      <!-- End nav-right -->
+    </header>
+    <!-- End header -->
+
+    <main id="main-content">
+      <!-- ACCESSIBILITY: id matches the skip link target -->
+      <section class="hero" aria-labelledby="hero-heading">
+        <!-- Links section to its heading -->
+        <h1 id="hero-heading">Personalise Your Learnings</h1>
+        <!-- Home heading -->
+        <p>Find the perfect tutor for your learning style</p>
+        <!-- Description -->
+        <br />
+        <!-- Spacing -->
+        <!-- ACCESSIBILITY: title provides extra context for the action -->
+        <a
+          href="/account"
+          title="Start the tutor matching process"
+          style="
+            padding: 15px 30px;
+            background: #4a90d9;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+          "
+          >Get Started</a
+        >
+      </section>
+      <!-- End hero -->
+
+      <section class="tutors-section" aria-label="Featured Tutors List">
+        <!-- Describes the section content -->
+        <h2 style="text-align: center; margin-bottom: 20px">
+          Featured Tutors:
+        </h2>
+        <!-- Section title -->
+        <div class="tutor-grid">
+          <!-- Container for tutor cards -->
+          {% for tutor in tutors %}
+          <!-- Loops through database records -->
+          <div class="tutor-card" role="article">
+            <!-- ACCESSIBILITY: Identifies each card as a standalone item -->
+
+            <!-- ACCESSIBILITY: alt text now describes who is in the photo -->
+            <img
+              src="/static/images/{{ tutor['photo_url'] }}"
+              alt="Profile picture of {{ tutor['full_name'] }}"
+              class="tutor-thumb"
+            />
+
+            <div class="tutor-info">
+              <!-- Text container -->
+              <h3>{{ tutor['full_name'] }}</h3>
+              <!-- Tutor name -->
+              <p>{{ tutor['bio'] }}</p>
+              <!-- Tutor bio -->
             </div>
-            <div class="search-bar"> <!-- Search container -->
-                <input type="text" id="tutorSearch" placeholder="Search tutors..." onkeyup="filterTutors()"> <!-- The interactive search box -->
-            </div> <!-- End search-bar -->
-        </div> <!-- End nav-left -->
+            <!-- End info -->
+          </div>
+          <!-- End card -->
+          {% endfor %}
+          <!-- Ends Jinja2 loop -->
+        </div>
+        <!-- End grid -->
+      </section>
+      <!-- End tutors-section -->
+    </main>
+    <!-- End main -->
 
-        <nav class="nav-right"> <!-- Links on the right -->
-            <a href="/">Main Menu</a> <!-- Link to home -->
-            <a href="/account">Apply Now</a> <!-- Link to register -->
-            <a href="/about">About Us</a> <!-- Link to tutors page -->
-            <a href="/login">Login</a>
-        </nav> <!-- End nav-right -->
-    </header> <!-- End header -->
+    <footer class="footer">
+      <!-- Contact bar -->
+      <p>Not sure about something? <strong>Contact us!</strong></p>
+      <!-- Call to action -->
+      <p>Phone: 0400 000 000 | Email: info@tutors.com</p>
+      <!-- Details -->
+    </footer>
+    <!-- End footer -->
 
-    <main> <!-- Main content container -->
-        <section class="hero"> <!-- Main banner -->
-            <h1>Personalise Your Learnings</h1> <!-- Home heading -->
-            <p>Find the perfect tutor for your learning style</p> <!-- Home description -->
-            <br> <!-- Space -->
-            <a href="/account" style="padding: 15px 30px; background: #4a90d9; color: white; text-decoration: none; border-radius: 5px; font-weight: bold;">Get Started</a> <!-- Start button -->
-        </section> <!-- End hero -->
+    <script>
+      // Starts JavaScript
+      function filterTutors() {
+        // Function to filter tutor names
+        let input = document.getElementById("tutorSearch").value.toLowerCase(); // Gets search text
+        let cards = document.getElementsByClassName("tutor-card"); // Gets all cards
+        for (let i = 0; i < cards.length; i++) {
+          // Loops through every card
+          let name = cards[i]
+            .getElementsByTagName("h3")[0]
+            .innerText.toLowerCase(); // Finds name in card
+          if (name.includes(input)) {
+            cards[i].style.display = "";
+          } // Shows if it matches
+          else {
+            cards[i].style.display = "none";
+          } // Hides if it does not match
+        } // Ends the loop
+      } // Ends the function
+    </script>
+    <!-- Ends script -->
 
-        <section class="tutors-section"> <!-- Section to show tutors on home page -->
-            <h2 style="text-align: center; margin-bottom: 20px;">Featured Tutors:</h2> <!-- Section title -->
-        <div class="tutor-grid"> <!-- Container for organized tutor cards -->
-            {% for tutor in tutors %} <!-- Loops through every tutor in the database -->
-            <div class="tutor-card"> <!-- Individual card for one tutor -->
-                
-                <!-- THE IMAGE FIX: Pulls from the 'photo_url' column name -->
-                <img src="/static/images/{{ tutor['photo_url'] }}" alt="{{ tutor['full_name'] }}" class="tutor-thumb"> 
-                    
-                <div class="tutor-info"> <!-- Container for the text next to the photo -->
-                    <h3>{{ tutor['full_name'] }}</h3> <!-- Displays tutor's name -->
-                    <p>{{ tutor['bio'] }}</p> <!-- Displays tutor's biography -->
-                </div> <!-- End tutor-info -->
-                    
-            </div> <!-- End tutor-card -->
-            {% endfor %} <!-- Ends the Jinja2 loop -->
-        </div> <!-- End grid container -->
-        </section> <!-- End tutors-section -->
-    </main> <!-- End main -->
-
-    <footer class="footer"> <!-- Contact bar at the absolute bottom -->
-        <p>Not sure about something? <strong>Contact us!</strong></p> <!-- Call to action -->
-        <p>Phone: 0400 000 000 | Email: info@tutors.com</p> <!-- Contact details -->
-    </footer> <!-- End footer -->
-
-    <script> // Starts JavaScript
-    function filterTutors() { // Real-time search function
-        let input = document.getElementById('tutorSearch').value.toLowerCase(); // Gets user input
-        let cards = document.getElementsByClassName('tutor-card'); // Finds all tutor boxes
-        for (let i = 0; i < cards.length; i++) { // Loops through boxes
-            let name = cards[i].getElementsByTagName('h3')[0].innerText.toLowerCase(); // Gets name in box
-            if (name.includes(input)) { cards[i].style.display = ""; } // Shows if match
-            else { cards[i].style.display = "none"; } // Hides if no match
-        } // End loop
-    } // End function
-    </script> <!-- Closes script -->
-
-    <script> <!-- Starts the JavaScript section to register the background worker -->
-    if ('serviceWorker' in navigator) { // Checks if the browser supports service workers
-        navigator.serviceWorker.register('/service-worker.js') // Tells browser to activate your service worker file
-        .then(function() { // Logic that runs if the registration is successful
-            console.log('Service Worker registered successfully!'); // Prints success message to the browser console
-        }) // Ends the success logic
-        .catch(function(error) { // Logic that runs if there is an error during registration
-            console.log('Service Worker registration failed:', error); // Prints the error details to the console
-        }); // Ends the error logic
-    } // Ends the browser check
-    </script> <!-- Ends the service worker registration script -->
-</body> <!-- Closes body -->
-</html> <!-- Closes HTML -->
+    <script>
+      // Starts Service Worker script
+      if ("serviceWorker" in navigator) {
+        // Checks browser support
+        navigator.serviceWorker
+          .register("/service-worker.js") // Registers the background file
+          .then(function () {
+            // Success case
+            console.log("Service Worker registered successfully!"); // Success log
+          }) // Ends success block
+          .catch(function (error) {
+            // Failure case
+            console.log("Service Worker registration failed:", error); // Error log
+          }); // Ends error block
+      } // Ends check
+    </script>
+    <!-- Ends script -->
+  </body>
+  <!-- Closes body -->
+</html>
+<!-- Closes HTML -->

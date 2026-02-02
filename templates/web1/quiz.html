@@ -1,146 +1,166 @@
 <!-- Declares this document as HTML5 -->
-<!DOCTYPE html>
+<!doctype html>
 <!-- Starts the HTML document in English -->
 <html lang="en">
-<!-- Container for metadata and page settings -->
-<head>
+  <!-- Container for metadata and page settings -->
+  <head>
     <!-- Sets the character encoding to UTF-8 -->
-    <meta charset="UTF-8">
+    <meta charset="UTF-8" />
     <!-- Ensures the page is responsive on mobile devices -->
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <!-- Sets the title shown in the browser tab -->
     <title>Filter Tutors</title>
     <!-- Links the external CSS file for styling -->
-        <link rel="icon" href="/static/images/icon.png" type="image/png" />  <!-- Tells the browser to use icon.png as the tab icon.-->   
-    <link rel="manifest" href="/static/manifest.json"> <!-- Tells the browser where to find PWA settings for install -->
-    <link rel="stylesheet" href="/static/css/style.css">
-<!-- Closes the head section -->
-</head>
+    <link rel="icon" href="/static/images/icon.png" type="image/png" />
+    <!-- Tells the browser to use icon.png as the tab icon.-->
+    <link rel="manifest" href="/static/manifest.json" />
+    <!-- Tells the browser where to find PWA settings for install -->
+    <link rel="stylesheet" href="/static/css/style.css" />
+    <!-- Closes the head section -->
+  </head>
 
-<!-- Starts the visible content of the page -->
-<body>
+  <!-- Starts the visible content of the page -->
+  <body>
     <!-- Top navigation bar container -->
     <header class="navbar">
-        <!-- Displays the brand logo text -->
-        <div class="logo">
-                <img src="/static/images/icon.png" alt="TutorMatch Logo" height="50">
-        </div>
-        <!-- Container for the search and filter tools -->
-        <div class="search-bar">
-            <!-- Dropdown that triggers a JavaScript filter function on change -->
-            <select id="traitFilter" onchange="filterByTrait()">
-                <!-- Default option to show all tutors -->
-                <option value="">-- All Traits --</option>
-                <!-- Starts a loop to display traits from the database -->
-                {% for trait in traits %}
-                <!-- Creates a dropdown option for each trait name -->
-                <option value="{{ trait[1] }}">{{ trait[1] }}</option>
-                <!-- Ends the trait loop -->
-                {% endfor %}
-            <!-- Closes the select dropdown -->
-            </select>
+      <!-- Displays the brand logo text -->
+      <div class="logo">
+        <img src="/static/images/icon.png" alt="TutorMatch Logo" height="50" />
+      </div>
+      <!-- Container for the search and filter tools -->
+      <div class="search-bar">
+        <!-- Dropdown that triggers a JavaScript filter function on change -->
+        <select id="traitFilter" onchange="filterByTrait()">
+          <!-- Default option to show all tutors -->
+          <option value="">-- All Traits --</option>
+          <!-- Starts a loop to display traits from the database -->
+          {% for trait in traits %}
+          <!-- Creates a dropdown option for each trait name -->
+          <option value="{{ trait[1] }}">{{ trait[1] }}</option>
+          <!-- Ends the trait loop -->
+          {% endfor %}
+          <!-- Closes the select dropdown -->
+        </select>
         <!-- Closes the search-bar div -->
-        </div>
-    <!-- Closes the header section -->
+      </div>
+      <!-- Closes the header section -->
     </header>
 
     <!-- Main content container for the tutor selection -->
     <main class="hero">
-        <!-- Main page heading -->
-        <h1>Select Your Tutor</h1>
-        <!-- Instructions for filtering tutors -->
-        <p>Pick a trait to filter. <strong>Tip:</strong> If you don't want a trait, select a different one.</p>
+      <!-- Main page heading -->
+      <h1>Select Your Tutor</h1>
+      <!-- Instructions for filtering tutors -->
+      <p>
+        Pick a trait to filter. <strong>Tip:</strong> If you don't want a trait,
+        select a different one.
+      </p>
 
-        <!-- Form that sends data to the final confirmation page -->
-<!-- Form starts: method must be POST for security (SE-12-07) and reliable offline use (SE-12-03) -->
-<form action="/final" method="POST">
-    <!-- These hidden fields carry the data from Step 1 and Step 2 to the Final Step -->
-    <input type="hidden" name="fullname" value="{{ fullname }}">
-    <input type="hidden" name="email" value="{{ email }}">
-    <input type="hidden" name="username" value="{{ username }}">
-    <input type="hidden" name="password" value="{{ password }}">
-    
-    <!-- TRIPLE CHECK: These must match 'course_id' and 'time_slot' in your main.py -->
-    <input type="hidden" name="course_id" value="{{ course }}">
-    <input type="hidden" name="time_slot" value="{{ time }}">
-    
-    <!-- Grid container for organized tutor cards -->
-    <div class="tutor-grid">
-        <!-- Starts a loop to display every tutor found in the database -->
-        {% for tutor in tutors %}
-        <!-- Individual tutor card with a data attribute for filtering -->
-        <div class="tutor-card" data-traits="{{ tutor[1] }}">
-            <!-- Displays the tutor's full name -->
-            <h3>{{ tutor[0] }}</h3>
-            <!-- Displays the list of personality traits for the tutor -->
-            <p><strong>Traits:</strong> <span class="trait-list">{{ tutor[1] }}</span></p>
-            <br>
-            <!-- Radio button used to select one specific tutor -->
-            <!-- name="selected_tutor" matches the request.form.get('selected_tutor') in Python -->
-            <input type="radio" name="selected_tutor" value="{{ tutor[0] }}" required>
-        </div> <!-- Ends tutor card -->
-        {% endfor %} <!-- Ends the loop -->
-    </div> <!-- Ends the grid -->
+      <!-- Form that sends data to the final confirmation page -->
+      <!-- Form starts: method must be POST for security (SE-12-07) and reliable offline use (SE-12-03) -->
+      <form action="/final" method="POST">
+        <!-- Form to send final selection -->
+        <input type="hidden" name="fullname" value="{{ fullname }}" />
+        <!-- Stores name -->
+        <input type="hidden" name="email" value="{{ email }}" />
+        <!-- Stores email -->
+        <input type="hidden" name="username" value="{{ username }}" />
+        <!-- Stores username -->
+        <input type="hidden" name="password" value="{{ password }}" />
+        <!-- Stores hashed PW -->
+        <input type="hidden" name="course_id" value="{{ course_id }}" />
+        <!-- THE FIX: Stores Course ID -->
+        <input type="hidden" name="time" value="{{ time }}" />
+        <!-- Stores time slot -->
 
-    <!-- Button to submit the form and save the registration permanently -->
-    <button type="submit" class="btn">Complete Registration</button>
-<!-- Closes the form -->
-</form>
-    <!-- Closes the main section -->
+        <div class="tutor-grid">
+          <!-- Grid for tutors -->
+          {% for tutor in tutors %}
+          <!-- Loops through joined tutor data -->
+          <div class="tutor-card" data-traits="{{ tutor['traits'] }}">
+            <!-- Stores traits for JS filter -->
+            <h3>{{ tutor['full_name'] }}</h3>
+            <!-- Displays Name -->
+            <p><strong>Learning Styles:</strong> {{ tutor['traits'] }}</p>
+            <!-- Displays Traits -->
+            <input
+              type="radio"
+              name="selected_tutor_id"
+              value="{{ tutor['tutor_id'] }}"
+              required
+            />
+            <!-- REMOVED THE DUPLICATE /> THAT WAS HERE -->
+          </div>
+          <!-- Ends card -->
+          {% endfor %}
+          <!-- Ends loop -->
+        </div>
+        <!-- Ends grid -->
+        <button type="submit" class="btn">Confirm Registration</button>
+        <!-- Submit button -->
+      </form>
+      <!-- Ends form -->
+      <!-- Closes the main section -->
     </main>
 
     <!-- Bottom footer containing contact information -->
     <footer class="footer">
-        <!-- Call to action for user questions -->
-        <p>Not sure about something? <strong>Contact us!</strong></p>
-        <!-- Specific phone and email contact details -->
-        <p>Phone: 0400 000 000 | Email: info@tutors.com</p>
-    <!-- Closes the footer section -->
+      <!-- Call to action for user questions -->
+      <p>Not sure about something? <strong>Contact us!</strong></p>
+      <!-- Specific phone and email contact details -->
+      <p>Phone: 0400 000 000 | Email: info@tutors.com</p>
+      <!-- Closes the footer section -->
     </footer>
 
     <!-- Starts the JavaScript section for page interactivity -->
     <script>
-    // Defines the function to hide or show tutors based on traits
-    function filterByTrait() {
+      // Defines the function to hide or show tutors based on traits
+      function filterByTrait() {
         // Gets the currently selected trait from the dropdown menu
-        let selectedTrait = document.getElementById('traitFilter').value;
+        let selectedTrait = document.getElementById("traitFilter").value;
         // Gets all elements on the page that are tutor cards
-        let cards = document.getElementsByClassName('tutor-card');
-        
+        let cards = document.getElementsByClassName("tutor-card");
+
         // Loops through every tutor card one by one
         for (let i = 0; i < cards.length; i++) {
-            // Retrieves the traits string stored in the card's data attribute
-            let tutorTraits = cards[i].getAttribute('data-traits');
-            
-            // Checks if the filter is empty or if the tutor has the selected trait
-            if (selectedTrait === "" || tutorTraits.includes(selectedTrait)) {
-                // Makes the card visible if it matches the criteria
-                cards[i].style.display = "";
+          // Retrieves the traits string stored in the card's data attribute
+          let tutorTraits = cards[i].getAttribute("data-traits");
+
+          // Checks if the filter is empty or if the tutor has the selected trait
+          if (selectedTrait === "" || tutorTraits.includes(selectedTrait)) {
+            // Makes the card visible if it matches the criteria
+            cards[i].style.display = "";
             // Runs if the tutor does not match the selected trait
-            } else {
-                // Hides the card from the user's view
-                cards[i].style.display = "none";
+          } else {
+            // Hides the card from the user's view
+            cards[i].style.display = "none";
             // Ends the if-else logic
-            }
-        // Ends the for loop
+          }
+          // Ends the for loop
         }
-    // Ends the filter function
-    }
-    // Ends the script section
+        // Ends the filter function
+      }
+      // Ends the script section
     </script>
 
-    <script> <!-- Starts the JavaScript section to register the background worker -->
-    if ('serviceWorker' in navigator) { // Checks if the browser supports service workers
-        navigator.serviceWorker.register('/service-worker.js') // Tells browser to activate your service worker file
-        .then(function() { // Logic that runs if the registration is successful
-            console.log('Service Worker registered successfully!'); // Prints success message to the browser console
-        }) // Ends the success logic
-        .catch(function(error) { // Logic that runs if there is an error during registration
-            console.log('Service Worker registration failed:', error); // Prints the error details to the console
-        }); // Ends the error logic
-    } // Ends the browser check
-    </script> <!-- Ends the service worker registration script -->
-<!-- Closes the body section -->
-</body>
-<!-- Closes the entire HTML document -->
+    <script>
+      <!-- Starts the JavaScript section to register the background worker -->
+      if ("serviceWorker" in navigator) {
+        // Checks if the browser supports service workers
+        navigator.serviceWorker
+          .register("/service-worker.js") // Tells browser to activate your service worker file
+          .then(function () {
+            // Logic that runs if the registration is successful
+            console.log("Service Worker registered successfully!"); // Prints success message to the browser console
+          }) // Ends the success logic
+          .catch(function (error) {
+            // Logic that runs if there is an error during registration
+            console.log("Service Worker registration failed:", error); // Prints the error details to the console
+          }); // Ends the error logic
+      } // Ends the browser check
+    </script>
+    <!-- Ends the service worker registration script -->
+    <!-- Closes the body section -->
+  </body>
+  <!-- Closes the entire HTML document -->
 </html>
