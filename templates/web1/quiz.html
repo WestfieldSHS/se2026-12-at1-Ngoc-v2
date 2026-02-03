@@ -111,56 +111,41 @@
       <p>Phone: 0400 000 000 | Email: info@tutors.com</p>
       <!-- Closes the footer section -->
     </footer>
-
-    <!-- Starts the JavaScript section for page interactivity -->
     <script>
-      // Defines the function to hide or show tutors based on traits
+      // Defines the function to filter tutors by traits
       function filterByTrait() {
-        // Gets the currently selected trait from the dropdown menu
+        // Gets the selected trait from dropdown
         let selectedTrait = document.getElementById("traitFilter").value;
-        // Gets all elements on the page that are tutor cards
+        // Gets all tutor cards
         let cards = document.getElementsByClassName("tutor-card");
 
-        // Loops through every tutor card one by one
+        // Loops through every card
         for (let i = 0; i < cards.length; i++) {
-          // Retrieves the traits string stored in the card's data attribute
+          // Gets the traits from the data attribute
           let tutorTraits = cards[i].getAttribute("data-traits");
 
-          // Checks if the filter is empty or if the tutor has the selected trait
+          // Shows card if no filter or if tutor has the trait
           if (selectedTrait === "" || tutorTraits.includes(selectedTrait)) {
-            // Makes the card visible if it matches the criteria
             cards[i].style.display = "";
-            // Runs if the tutor does not match the selected trait
           } else {
-            // Hides the card from the user's view
             cards[i].style.display = "none";
-            // Ends the if-else logic
           }
-          // Ends the for loop
         }
-        // Ends the filter function
       }
-      // Ends the script section
     </script>
 
     <script>
-      <!-- Starts the JavaScript section to register the background worker -->
+      // Service worker registration
       if ("serviceWorker" in navigator) {
-        // Checks if the browser supports service workers
         navigator.serviceWorker
-          .register("/service-worker.js") // Tells browser to activate your service worker file
+          .register("/service-worker.js")
           .then(function () {
-            // Logic that runs if the registration is successful
-            console.log("Service Worker registered successfully!"); // Prints success message to the browser console
-          }) // Ends the success logic
+            console.log("Service Worker registered successfully!");
+          })
           .catch(function (error) {
-            // Logic that runs if there is an error during registration
-            console.log("Service Worker registration failed:", error); // Prints the error details to the console
-          }); // Ends the error logic
-      } // Ends the browser check
+            console.log("Service Worker registration failed:", error);
+          });
+      }
     </script>
-    <!-- Ends the service worker registration script -->
-    <!-- Closes the body section -->
   </body>
-  <!-- Closes the entire HTML document -->
 </html>

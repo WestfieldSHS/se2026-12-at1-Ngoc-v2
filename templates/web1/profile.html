@@ -3,12 +3,19 @@
   <head>
     <meta charset="UTF-8" />
     <title>My Profile</title>
+    <link rel="icon" href="/static/images/icon.png" type="image/png" />
+    <link rel="manifest" href="/static/manifest.json" />
     <link rel="stylesheet" href="/static/css/style.css" />
   </head>
   <body>
     <header class="navbar">
-      <div class="logo">Profile</div>
-      <nav class="nav-right"><a href="/">Home</a></nav>
+      <div class="logo">
+        <img src="/static/images/icon.png" alt="TutorMatch Logo" height="50" />
+      </div>
+      <nav class="nav-right">
+        <a href="/">Home</a>
+        <a href="/about">About Us</a>
+      </nav>
     </header>
     <main class="hero">
       <h1>Welcome, {{ user['name'] }}!</h1>
@@ -31,5 +38,21 @@
         <p><strong>Assigned Tutor:</strong> {{ user['tutor_name'] }}</p>
       </div>
     </main>
+    <footer class="footer">
+      <p>Not sure about something? <strong>Contact us!</strong></p>
+      <p>Phone: 0400 000 000 | Email: info@tutors.com</p>
+    </footer>
+    <script>
+      if ("serviceWorker" in navigator) {
+        navigator.serviceWorker
+          .register("/service-worker.js")
+          .then(function () {
+            console.log("Service Worker registered successfully!");
+          })
+          .catch(function (error) {
+            console.log("Service Worker registration failed:", error);
+          });
+      }
+    </script>
   </body>
 </html>
