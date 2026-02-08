@@ -37,43 +37,31 @@
     >
 
     <header class="navbar">
-      <!-- Top navigation bar -->
-      <div class="nav-left">
-        <!-- Groups Logo and Search -->
-        <div class="logo">
-          <!-- ACCESSIBILITY: Descriptive alt text -->
-          <img
-            src="/static/images/icon.png"
-            alt="TutorMatch official company logo"
-            height="50"
-          />
-        </div>
-        <div class="search-bar">
-          <!-- Search container -->
-          <!-- ACCESSIBILITY: aria-label describes the input without a visible tag -->
-          <input
-            type="text"
-            id="tutorSearch"
-            placeholder="Search tutors..."
-            onkeyup="filterTutors()"
-            aria-label="Search for a tutor by name"
-          />
-        </div>
-        <!-- End search-bar -->
-      </div>
-      <!-- End nav-left -->
+            <!-- HTML comment: Defines the clickable button for the mobile hamburger menu -->
+      <button
+        class="menu-toggle" /* Assigns a class name for CSS styling and visibility control */
+        aria-label="Open navigation menu" /* ACCESSIBILITY: Describes the button's purpose for screen readers */
+        onclick="toggleMenu()" /* EVENT HANDLER: Runs the toggleMenu function when the button is clicked */
+      >
+        <!-- HTML comment: These internal spans are styled as the three horizontal lines -->
+        <span class="bar"></span> <!-- First horizontal line of the hamburger icon -->
+        <span class="bar"></span> <!-- Middle horizontal line of the hamburger icon -->
+        <span class="bar"></span> <!-- Bottom horizontal line of the hamburger icon -->
+      </button> <!-- Closes the button element -->
 
-      <!-- ACCESSIBILITY: aria-label identifies this specific navigation block -->
-      <nav class="nav-right" aria-label="Main Site Navigation">
-        <a href="/">Main Menu</a>
-        <!-- Home link -->
-        <a href="/account">Apply Now</a>
-        <!-- Signup link -->
-        <a href="/about">About Us</a>
-        <!-- About link -->
-        <a href="/login">Login</a>
-        <!-- Login link -->
-      </nav>
+      <!-- HTML comment: Container for the navigation links that we will hide or show -->
+      <nav
+        class="nav-links" /* Assigns a class for CSS flexbox and mobile layout styling */
+        id="navLinks" /* ID used by JavaScript to target this specific element for toggling */
+        aria-label="Main Site Navigation" /* ACCESSIBILITY: Identifies this block as a navigation landmark */
+      >
+        <a href="/">Main Menu</a> <!-- Link to the homepage of the website -->
+        <a href="/account">Apply Now</a> <!-- Link to the registration or account creation page -->
+        <a href="/about">About Us</a> <!-- Link to the information page about the tutors -->
+        <a href="/login">Login</a> <!-- Link to the user authentication/login page -->
+      </nav> <!-- Closes the navigation container -->
+
+
       <!-- End nav-right -->
     </header>
     <!-- End header -->
@@ -112,7 +100,7 @@
         </h2>
         <!-- Section title -->
         <div class="tutor-grid">
-          <!-- Container for tutor cards -->
+          <!-- Jinja for my code, -->
           {% for tutor in tutors %}
           <!-- Loops through database records -->
           <div class="tutor-card" role="article">
@@ -192,6 +180,16 @@
       } // Ends check
     </script>
     <!-- Ends script -->
+
+    <script>
+      // This function toggles the menu on and off
+      function toggleMenu() {
+        // Selects the nav-links element by its ID
+        const nav = document.getElementById("navLinks");
+        // Adds the 'active' class if it's missing, removes it if it's there
+        nav.classList.toggle("active");
+      }
+    </script>
   </body>
   <!-- Closes body -->
 </html>
