@@ -1,27 +1,27 @@
 <!doctype html>
-<!-- Declares an HTML5 document -->
+<!-- Declares this document as an HTML5 file -->
 <html lang="en">
-  <!-- Sets language for screen readers -->
+  <!-- Starts the HTML document and sets language to English -->
   <head>
-    <!-- Metadata section -->
+    <!-- Starts metadata section -->
     <meta charset="UTF-8" />
-    <!-- Correct character encoding -->
+    <!-- Sets character encoding -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <!-- Responsive viewport -->
+    <!-- Ensures mobile responsiveness -->
     <title>About Us - Our Tutors</title>
-    <!-- Page title -->
+    <!-- Sets browser tab title -->
     <link rel="manifest" href="/static/manifest.json" />
-    <!-- PWA manifest -->
+    <!-- Links PWA manifest -->
     <link rel="icon" href="/static/images/icon.png" type="image/png" />
-    <!-- Tab icon -->
+    <!-- Sets browser tab icon -->
     <link rel="stylesheet" href="/static/css/style.css" />
-    <!-- External CSS -->
+    <!-- Links CSS stylesheet -->
   </head>
-  <!-- Closes head -->
+  <!-- Ends head section -->
   <body>
-    <!-- Starts visible content -->
+    <!-- Starts visible body -->
 
-    <!-- ACCESSIBILITY: Skip link allows keyboard users to bypass the menu (SE-12-02) -->
+    <!-- ACCESSIBILITY: Skip link for keyboard users -->
     <a
       href="#main-content"
       class="skip-link"
@@ -37,20 +37,21 @@
     >
 
     <header class="navbar">
-      <!-- Top navigation bar -->
+      <!-- Starts Navigation Bar -->
       <div class="nav-left">
-        <!-- Groups Logo and Search -->
+        <!-- Container for Logo and Search -->
         <div class="logo">
-          <!-- ACCESSIBILITY: Descriptive alt text for the brand logo -->
+          <!-- Logo container -->
           <img
             src="/static/images/icon.png"
             alt="TutorMatch official logo"
             height="50"
           />
+          <!-- Logo image -->
         </div>
+        <!-- Ends logo -->
         <div class="search-bar">
-          <!-- Search container -->
-          <!-- ACCESSIBILITY: aria-label is required for inputs without visible labels -->
+          <!-- Search input container -->
           <input
             type="text"
             id="tutorSearch"
@@ -58,55 +59,71 @@
             onkeyup="filterTutors()"
             aria-label="Search our tutor database by name"
           />
+          <!-- Search input field -->
         </div>
-        <!-- End search-bar -->
+        <!-- Ends search bar -->
       </div>
-      <!-- End nav-left -->
+      <!-- Ends nav-left -->
 
-      <!-- ACCESSIBILITY: Identifies the navigation block for assistive technology -->
-      <nav class="nav-right" aria-label="Main Site Navigation">
+      <!-- Hamburger Menu Button -->
+      <button
+        class="menu-toggle"
+        aria-label="Open navigation menu"
+        onclick="toggleMenu()"
+      >
+        <span class="bar"></span>
+        <span class="bar"></span>
+        <span class="bar"></span>
+      </button>
+
+      <!-- Navigation Links -->
+      <nav class="nav-links" id="navLinks" aria-label="Main Site Navigation">
         <a href="/">Main Menu</a>
-        <!-- Link to home -->
+        <!-- Link to Home -->
         <a href="/account">Apply Now</a>
-        <!-- Link to signup -->
+        <!-- Link to Account -->
         <a href="/about">About Us</a>
-        <!-- Current page -->
+        <!-- Link to About -->
       </nav>
-      <!-- End nav -->
+      <!-- Ends navigation -->
     </header>
-    <!-- End header -->
+    <!-- Ends header -->
 
-    <!-- ACCESSIBILITY: id matches the skip link to allow jumping to content -->
     <main id="main-content">
+      <!-- Main content area -->
       <section class="hero" aria-labelledby="about-heading">
+        <!-- Hero section -->
         <h1 id="about-heading">Why Choose Us?</h1>
-        <!-- Main heading -->
+        <!-- Heading -->
         <p>We have all the teachers that will personalise your learning!</p>
         <!-- Description -->
       </section>
-      <!-- End hero -->
 
       <section class="tutors-section" aria-label="Tutor Directory">
+        <!-- Tutor list section -->
         <h2 style="text-align: center; margin-bottom: 20px">
           All of Our Tutors:
         </h2>
         <div class="tutor-grid">
+          <!-- Grid for cards -->
           {% for tutor in tutors %}
-          <!-- ACCESSIBILITY: role="article" marks cards as independent content blocks -->
+          <!-- Jinja2 Loop for tutors -->
           <div class="tutor-card" role="article">
-            <!-- ACCESSIBILITY: Alt text now identifies the specific tutor -->
+            <!-- Card container -->
             <img
               src="/static/images/{{ tutor['photo_url'] }}"
               alt="Profile picture of {{ tutor['full_name'] }}"
               class="tutor-thumb"
             />
+            <!-- Tutor Image -->
             <div class="tutor-info">
+              <!-- Info container -->
               <h3>{{ tutor['full_name'] }}</h3>
-              <!-- Tutor name -->
+              <!-- Tutor Name -->
               <p><strong>About:</strong> {{ tutor['bio'] }}</p>
-              <!-- Tutor bio -->
-              <!-- ACCESSIBILITY: aria-label for the link to provide context for the email action -->
+              <!-- Tutor Bio -->
               <p>
+                <!-- Email Link -->
                 <a
                   href="mailto:{{ tutor['full_name'] | lower | replace(' ', '.') }}@tutors.com"
                   aria-label="Send an email to {{ tutor['full_name'] }}"
@@ -116,28 +133,28 @@
                 </a>
               </p>
             </div>
-            <!-- End info -->
+            <!-- Ends info -->
           </div>
-          <!-- End card -->
+          <!-- Ends card -->
           {% endfor %}
+          <!-- Ends loop -->
         </div>
-        <!-- End grid -->
+        <!-- Ends grid -->
       </section>
-      <!-- End tutors-section -->
+      <!-- Ends section -->
     </main>
-    <!-- End main -->
+    <!-- Ends main -->
 
     <footer class="footer">
-      <!-- Contact footer -->
+      <!-- Footer section -->
       <p>Not sure about something? <strong>Contact us!</strong></p>
       <p>Phone: 0400 000 000 | Email: info@tutors.com</p>
     </footer>
-    <!-- End footer -->
 
-    <!-- JavaScript remains at the bottom for performance (SE-12-03) -->
+    <!-- JavaScript Scripts -->
     <script>
       function filterTutors() {
-        // Real-time search logic
+        // Search filter logic
         let input = document.getElementById("tutorSearch").value.toLowerCase();
         let cards = document.getElementsByClassName("tutor-card");
         for (let i = 0; i < cards.length; i++) {
@@ -154,29 +171,11 @@
     </script>
 
     <script>
-      if ("serviceWorker" in navigator) {
-        // Registers PWA service worker
-        navigator.serviceWorker
-          .register("/service-worker.js")
-          .then(function () {
-            console.log("Service Worker registered successfully!");
-          })
-          .catch(function (error) {
-            console.log("Service Worker registration failed:", error);
-          });
-      }
-    </script>
-
-    <script>
-      // This function toggles the menu on and off
+      // Toggle Menu Logic
       function toggleMenu() {
-        // Selects the nav-links element by its ID
         const nav = document.getElementById("navLinks");
-        // Adds the 'active' class if it's missing, removes it if it's there
         nav.classList.toggle("active");
       }
     </script>
   </body>
-  <!-- Closes body -->
 </html>
-<!-- Closes HTML -->

@@ -1,30 +1,19 @@
 <!doctype html>
-<!-- Declares this as an HTML5 document for the browser -->
+<!-- Declares this as an HTML5 document -->
 <html lang="en">
-  <!-- Starts the HTML document and sets language to English -->
+  <!-- Sets language to English -->
   <head>
-    <!-- Section for settings that do not show up on the page -->
     <meta charset="UTF-8" />
-    <!-- Allows the page to show all characters correctly -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <!-- Makes the page fit perfectly on mobile phones for PWA standards -->
     <title>Registration Complete - Success</title>
-    <!-- Sets the text shown in the browser tab -->
     <link rel="icon" href="/static/images/icon.png" type="image/png" />
-    <!-- Tells the browser to use icon.png as the tab icon.-->
     <link rel="manifest" href="/static/manifest.json" />
-    <!-- Tells the browser where to find PWA settings for install -->
     <link rel="stylesheet" href="/static/css/style.css" />
-    <!-- Links to your CSS file for colors and layout -->
   </head>
-  <!-- Ends the head section -->
   <body>
-    <!-- Starts the visible content of the page -->
-
     <header class="navbar">
-      <!-- The blue bar at the top for navigation -->
+      <!-- Fixed Navbar Structure -->
       <div class="nav-left">
-        <!-- Group for the logo on the left side -->
         <div class="logo">
           <img
             src="/static/images/icon.png"
@@ -33,20 +22,25 @@
           />
         </div>
       </div>
-      <!-- Ends the nav-left container -->
 
-      <nav class="nav-right">
-        <!-- Section for the navigation links on the right -->
+      <!-- Hamburger Menu Button -->
+      <button
+        class="menu-toggle"
+        aria-label="Open navigation menu"
+        onclick="toggleMenu()"
+      >
+        <span class="bar"></span>
+        <span class="bar"></span>
+        <span class="bar"></span>
+      </button>
+
+      <!-- Navigation Links -->
+      <nav class="nav-links" id="navLinks" aria-label="Main Site Navigation">
         <a href="/">Main Menu</a>
-        <!-- Link back to the home page -->
         <a href="/account">Apply Now</a>
-        <!-- Link to the registration start -->
         <a href="/about">About Us</a>
-        <!-- Link to see the tutors list -->
       </nav>
-      <!-- Ends the link section -->
     </header>
-    <!-- Ends the entire header bar -->
 
     <nav
       class="steps-bar"
@@ -57,26 +51,16 @@
         font-weight: bold;
       "
     >
-      <!-- Progress bar from your storyboard -->
       <span style="color: #888">Account</span> |
-      <!-- Greyed out because step is complete -->
       <span style="color: #888">Class</span> |
-      <!-- Greyed out because step is complete -->
       <span style="color: #888">Quiz</span> |
-      <!-- Greyed out because step is complete -->
       <span style="color: #4a90d9">Final (Success!)</span>
-      <!-- Highlights the final step in blue -->
     </nav>
-    <!-- Ends the progress bar -->
 
     <main class="hero">
-      <!-- Main content area, centered like your home page banner -->
       <h1>Thank You!</h1>
-      <!-- Large success heading -->
       <p>Your account has been created and your details are saved.</p>
-      <!-- Confirmation message -->
 
-      <!-- White container box to show the saved details clearly -->
       <div
         style="
           max-width: 500px;
@@ -91,28 +75,21 @@
         <p style="margin-bottom: 10px">
           <strong>Full Name:</strong> {{ fullname }}
         </p>
-        <!-- Displays the submitted name -->
         <p style="margin-bottom: 10px"><strong>Email:</strong> {{ email }}</p>
-        <!-- Displays the submitted email -->
         <p style="margin-bottom: 10px">
-          <strong>Password:</strong> •••••••• (Hidden for your privacy)
+          <strong>Password:</strong> •••••••• (Hidden)
         </p>
         <p style="margin-bottom: 10px"><strong>Course:</strong> {{ course }}</p>
-        <!-- Displays the selected course -->
         <p style="margin-bottom: 10px"><strong>Time:</strong> {{ time }}</p>
-        <!-- Displays the selected time slot -->
         <p style="margin-bottom: 10px">
           <strong>Learning Style / Tutor:</strong> {{ selected_tutor }}
         </p>
-        <!-- Displays the tutor picked in the quiz -->
         <p>
           <em>Your account has been encrypted and secured in our database.</em>
         </p>
       </div>
-      <!-- Ends the results box -->
 
       <br />
-      <!-- Blue button to take the user back to the beginning -->
       <a
         href="/"
         style="
@@ -127,45 +104,17 @@
         >Go Back to Home</a
       >
     </main>
-    <!-- Ends the main content area -->
 
     <footer class="footer">
-      <!-- The dark contact bar at the absolute bottom -->
       <p>Not sure about something? <strong>Contact us!</strong></p>
-      <!-- Help prompt -->
       <p>Phone: 0400 000 000 | Email: info@tutors.com</p>
-      <!-- Contact details -->
     </footer>
-    <!-- Ends the footer -->
 
     <script>
-      <!-- Starts the JavaScript section to register the background worker -->
-      if ("serviceWorker" in navigator) {
-        // Checks if the browser supports service workers
-        navigator.serviceWorker
-          .register("/service-worker.js") // Tells browser to activate your service worker file
-          .then(function () {
-            // Logic that runs if the registration is successful
-            console.log("Service Worker registered successfully!"); // Prints success message to the browser console
-          }) // Ends the success logic
-          .catch(function (error) {
-            // Logic that runs if there is an error during registration
-            console.log("Service Worker registration failed:", error); // Prints the error details to the console
-          }); // Ends the error logic
-      } // Ends the browser check
-    </script>
-    <!-- Ends the service worker registration script -->
-
-    <script>
-      // This function toggles the menu on and off
       function toggleMenu() {
-        // Selects the nav-links element by its ID
         const nav = document.getElementById("navLinks");
-        // Adds the 'active' class if it's missing, removes it if it's there
         nav.classList.toggle("active");
       }
     </script>
   </body>
-  <!-- Ends the visible body -->
 </html>
-<!-- Ends the HTML file -->

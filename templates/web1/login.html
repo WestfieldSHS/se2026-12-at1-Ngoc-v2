@@ -1,47 +1,49 @@
 <!doctype html>
 <!-- Declares this as an HTML5 document -->
 <html lang="en">
-  <!-- Starts the document and sets language to English -->
+  <!-- Sets language to English -->
   <head>
-    <!-- Metadata section -->
     <meta charset="UTF-8" />
-    <!-- Correct character encoding -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <!-- Mobile responsiveness -->
     <title>Login - My Tutoring Service</title>
-    <!-- Tab title -->
     <link rel="icon" href="/static/images/icon.png" type="image/png" />
-    <!-- Tells the browser to use icon.png as the tab icon.-->
     <link rel="manifest" href="/static/manifest.json" />
-    <!-- Tells the browser where to find PWA settings for install -->
     <link rel="stylesheet" href="/static/css/style.css" />
-    <!-- Links to your CSS styling -->
   </head>
-  <!-- Ends head section -->
   <body>
-    <!-- Starts visible content -->
-
     <header class="navbar">
-      <!-- Blue navigation bar -->
-      <div class="logo">
-        <img src="/static/images/icon.png" alt="TutorMatch Logo" height="50" />
+      <!-- Fixed Navbar Structure -->
+      <div class="nav-left">
+        <div class="logo">
+          <img
+            src="/static/images/icon.png"
+            alt="TutorMatch Logo"
+            height="50"
+          />
+        </div>
       </div>
-      <nav class="nav-right">
-        <!-- Navigation links -->
+
+      <!-- Hamburger Menu Button -->
+      <button
+        class="menu-toggle"
+        aria-label="Open navigation menu"
+        onclick="toggleMenu()"
+      >
+        <span class="bar"></span>
+        <span class="bar"></span>
+        <span class="bar"></span>
+      </button>
+
+      <!-- Navigation Links -->
+      <nav class="nav-links" id="navLinks" aria-label="Main Site Navigation">
         <a href="/">Home</a>
-        <!-- Home link -->
         <a href="/login">Login</a>
-        <!-- Login link -->
         <a href="/account">Sign Up</a>
-        <!-- Registration link -->
       </nav>
-      <!-- Ends nav-right -->
     </header>
-    <!-- Ends header -->
+
     <main class="hero">
-      <!-- Centered content area -->
       <h1>Login to Your Account</h1>
-      <!-- Page heading -->
       <form
         action="/view_profile"
         method="POST"
@@ -57,7 +59,6 @@
         <label style="font-weight: bold; display: block; text-align: left"
           >Username:</label
         >
-        <!-- Label for username -->
         <input
           type="text"
           name="username"
@@ -70,11 +71,10 @@
             border: 1px solid #ccc;
           "
         />
-        <!-- Username field -->
+
         <label style="font-weight: bold; display: block; text-align: left"
           >Password:</label
         >
-        <!-- Label for password -->
         <input
           type="password"
           name="password"
@@ -87,7 +87,7 @@
             border: 1px solid #ccc;
           "
         />
-        <!-- Password field -->
+
         <button
           type="submit"
           style="
@@ -103,46 +103,18 @@
         >
           Sign In
         </button>
-        <!-- Submit button -->
       </form>
-      <!-- Ends the login form -->
     </main>
-    <!-- Ends main content area -->
+
     <footer class="footer">
-      <!-- Contact bar -->
       <p>Phone: 0400 000 000 | Email: info@tutors.com</p>
-      <!-- Contact details -->
     </footer>
-    <!-- Ends footer -->
 
     <script>
-      <!-- Starts the JavaScript section to register the background worker -->
-      if ("serviceWorker" in navigator) {
-        // Checks if the browser supports service workers
-        navigator.serviceWorker
-          .register("/service-worker.js") // Tells browser to activate your service worker file
-          .then(function () {
-            // Logic that runs if the registration is successful
-            console.log("Service Worker registered successfully!"); // Prints success message to the browser console
-          }) // Ends the success logic
-          .catch(function (error) {
-            // Logic that runs if there is an error during registration
-            console.log("Service Worker registration failed:", error); // Prints the error details to the console
-          }); // Ends the error logic
-      } // Ends the browser check
-    </script>
-    <!-- Ends the service worker registration script -->
-
-    <script>
-      // This function toggles the menu on and off
       function toggleMenu() {
-        // Selects the nav-links element by its ID
         const nav = document.getElementById("navLinks");
-        // Adds the 'active' class if it's missing, removes it if it's there
         nav.classList.toggle("active");
       }
     </script>
   </body>
-  <!-- Ends body section -->
 </html>
-<!-- Ends HTML file -->

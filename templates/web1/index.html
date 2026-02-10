@@ -1,27 +1,27 @@
 <!doctype html>
-<!-- Declares this is an HTML5 document -->
+<!-- Declares this document as an HTML5 file -->
 <html lang="en">
-  <!-- Sets language to English for screen readers -->
+  <!-- Starts the HTML document and sets the language to English -->
   <head>
-    <!-- Container for metadata -->
+    <!-- Starts the head section for metadata -->
     <meta charset="UTF-8" />
-    <!-- Allows special characters -->
+    <!-- Sets the character encoding to UTF-8 so all text displays correctly -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <!-- Mobile responsiveness -->
+    <!-- Ensures the page scales correctly on mobile devices -->
     <title>Home - Personalise Your Learning</title>
-    <!-- Tab title -->
+    <!-- Sets the title that appears in the browser tab -->
     <link rel="icon" href="/static/images/icon.png" type="image/png" />
-    <!-- Tab icon -->
+    <!-- Sets the small icon that appears in the browser tab -->
     <link rel="manifest" href="/static/manifest.json" />
-    <!-- PWA manifest -->
+    <!-- Links to the PWA manifest file for installing the app -->
     <link rel="stylesheet" href="/static/css/style.css" />
-    <!-- External CSS -->
+    <!-- Links to the external CSS file for styling -->
   </head>
-  <!-- Closes head -->
+  <!-- Ends the head section -->
   <body>
-    <!-- Starts visible content -->
+    <!-- Starts the visible body content -->
 
-    <!-- ACCESSIBILITY: Skip link for keyboard users (SE-12-02) -->
+    <!-- ACCESSIBILITY: Skip link allows keyboard users to jump past the menu -->
     <a
       href="#main-content"
       class="skip-link"
@@ -37,46 +37,81 @@
     >
 
     <header class="navbar">
-            <!-- HTML comment: Defines the clickable button for the mobile hamburger menu -->
+      <!-- Starts the blue navigation bar at the top -->
+
+      <!-- LEFT SIDE: Logo and Search Bar -->
+      <div class="nav-left">
+        <!-- Container for items on the left side of the nav bar -->
+        <div class="logo">
+          <!-- Container for the logo image -->
+          <img
+            src="/static/images/icon.png"
+            alt="TutorMatch official logo"
+            height="50"
+          />
+          <!-- The logo image file -->
+        </div>
+        <!-- Ends the logo container -->
+
+        <div class="search-bar">
+          <!-- Container for the search input -->
+          <input
+            type="text"
+            id="tutorSearch"
+            placeholder="Search tutors..."
+            onkeyup="filterTutors()"
+            aria-label="Search our tutor database by name"
+          />
+          <!-- The search box that runs filterTutors() when typing -->
+        </div>
+        <!-- Ends the search-bar container -->
+      </div>
+      <!-- Ends the nav-left container -->
+
+      <!-- MOBILE MENU BUTTON (Hamburger Icon) -->
+      <!-- This button is hidden on desktop via CSS and shown on mobile -->
       <button
-        class="menu-toggle" /* Assigns a class name for CSS styling and visibility control */
-        aria-label="Open navigation menu" /* ACCESSIBILITY: Describes the button's purpose for screen readers */
-        onclick="toggleMenu()" /* EVENT HANDLER: Runs the toggleMenu function when the button is clicked */
+        class="menu-toggle"
+        aria-label="Open navigation menu"
+        onclick="toggleMenu()"
       >
-        <!-- HTML comment: These internal spans are styled as the three horizontal lines -->
-        <span class="bar"></span> <!-- First horizontal line of the hamburger icon -->
-        <span class="bar"></span> <!-- Middle horizontal line of the hamburger icon -->
-        <span class="bar"></span> <!-- Bottom horizontal line of the hamburger icon -->
-      </button> <!-- Closes the button element -->
+        <!-- Button that triggers the Javascript menu toggle -->
+        <span class="bar"></span>
+        <!-- First line of the hamburger icon -->
+        <span class="bar"></span>
+        <!-- Middle line of the hamburger icon -->
+        <span class="bar"></span>
+        <!-- Bottom line of the hamburger icon -->
+      </button>
+      <!-- Ends the mobile menu button -->
 
-      <!-- HTML comment: Container for the navigation links that we will hide or show -->
-      <nav
-        class="nav-links" /* Assigns a class for CSS flexbox and mobile layout styling */
-        id="navLinks" /* ID used by JavaScript to target this specific element for toggling */
-        aria-label="Main Site Navigation" /* ACCESSIBILITY: Identifies this block as a navigation landmark */
-      >
-        <a href="/">Main Menu</a> <!-- Link to the homepage of the website -->
-        <a href="/account">Apply Now</a> <!-- Link to the registration or account creation page -->
-        <a href="/about">About Us</a> <!-- Link to the information page about the tutors -->
-        <a href="/login">Login</a> <!-- Link to the user authentication/login page -->
-      </nav> <!-- Closes the navigation container -->
-
-
-      <!-- End nav-right -->
+      <!-- RIGHT SIDE: Navigation Links -->
+      <!-- We use the class 'nav-links' to match the CSS for the mobile menu -->
+      <nav class="nav-links" id="navLinks" aria-label="Main Site Navigation">
+        <!-- The navigation container -->
+        <a href="/">Main Menu</a>
+        <!-- Link to the home page -->
+        <a href="/account">Apply Now</a>
+        <!-- Link to the signup page -->
+        <a href="/about">About Us</a>
+        <!-- Link to the about page -->
+        <a href="/login">Login</a>
+        <!-- Link to the login page -->
+      </nav>
+      <!-- Ends the navigation container -->
     </header>
-    <!-- End header -->
+    <!-- Ends the header section -->
 
     <main id="main-content">
-      <!-- ACCESSIBILITY: id matches the skip link target -->
+      <!-- Starts the main content area with an ID for the skip link -->
       <section class="hero" aria-labelledby="hero-heading">
-        <!-- Links section to its heading -->
+        <!-- Starts the hero banner section -->
         <h1 id="hero-heading">Personalise Your Learnings</h1>
-        <!-- Home heading -->
+        <!-- Main heading text -->
         <p>Find the perfect tutor for your learning style</p>
-        <!-- Description -->
+        <!-- Subtitle text -->
         <br />
-        <!-- Spacing -->
-        <!-- ACCESSIBILITY: title provides extra context for the action -->
+        <!-- Adds a line break for spacing -->
         <a
           href="/account"
           title="Start the tutor matching process"
@@ -90,107 +125,107 @@
           "
           >Get Started</a
         >
+        <!-- Call to action button linking to account creation -->
       </section>
-      <!-- End hero -->
+      <!-- Ends the hero section -->
 
       <section class="tutors-section" aria-label="Featured Tutors List">
-        <!-- Describes the section content -->
+        <!-- Starts the section displaying tutors -->
         <h2 style="text-align: center; margin-bottom: 20px">
           Featured Tutors:
         </h2>
-        <!-- Section title -->
+        <!-- Heading for the tutor list -->
         <div class="tutor-grid">
-          <!-- Jinja for my code, -->
+          <!-- Grid container to hold tutor cards -->
           {% for tutor in tutors %}
-          <!-- Loops through database records -->
+          <!-- Starts a Jinja2 loop to go through each tutor in the database -->
           <div class="tutor-card" role="article">
-            <!-- ACCESSIBILITY: Identifies each card as a standalone item -->
-
-            <!-- ACCESSIBILITY: alt text now describes who is in the photo -->
+            <!-- Individual card for a single tutor -->
             <img
               src="/static/images/{{ tutor['photo_url'] }}"
               alt="Profile picture of {{ tutor['full_name'] }}"
               class="tutor-thumb"
             />
-
+            <!-- Displays the tutor's photo -->
             <div class="tutor-info">
-              <!-- Text container -->
+              <!-- Container for tutor text details -->
               <h3>{{ tutor['full_name'] }}</h3>
-              <!-- Tutor name -->
+              <!-- Displays the tutor's name -->
               <p>{{ tutor['bio'] }}</p>
-              <!-- Tutor bio -->
+              <!-- Displays the tutor's biography -->
             </div>
-            <!-- End info -->
+            <!-- Ends the tutor info container -->
           </div>
-          <!-- End card -->
+          <!-- Ends the tutor card div -->
           {% endfor %}
-          <!-- Ends Jinja2 loop -->
+          <!-- Ends the Jinja2 loop -->
         </div>
-        <!-- End grid -->
+        <!-- Ends the tutor grid -->
       </section>
-      <!-- End tutors-section -->
+      <!-- Ends the tutors section -->
     </main>
-    <!-- End main -->
+    <!-- Ends the main content area -->
 
     <footer class="footer">
-      <!-- Contact bar -->
+      <!-- Starts the footer section at the bottom -->
       <p>Not sure about something? <strong>Contact us!</strong></p>
-      <!-- Call to action -->
+      <!-- Helper text -->
       <p>Phone: 0400 000 000 | Email: info@tutors.com</p>
-      <!-- Details -->
+      <!-- Contact information -->
     </footer>
-    <!-- End footer -->
+    <!-- Ends the footer section -->
 
     <script>
-      // Starts JavaScript
+      // Starts the script for filtering tutors
       function filterTutors() {
-        // Function to filter tutor names
-        let input = document.getElementById("tutorSearch").value.toLowerCase(); // Gets search text
-        let cards = document.getElementsByClassName("tutor-card"); // Gets all cards
+        // Function to filter tutor cards based on search input
+        let input = document.getElementById("tutorSearch").value.toLowerCase(); // Gets the text from the search bar and makes it lowercase
+        let cards = document.getElementsByClassName("tutor-card"); // Gets all the tutor card elements
         for (let i = 0; i < cards.length; i++) {
-          // Loops through every card
+          // Loops through every tutor card
           let name = cards[i]
             .getElementsByTagName("h3")[0]
-            .innerText.toLowerCase(); // Finds name in card
+            .innerText.toLowerCase(); // Finds the name inside the H3 tag of the current card
           if (name.includes(input)) {
-            cards[i].style.display = "";
-          } // Shows if it matches
-          else {
-            cards[i].style.display = "none";
-          } // Hides if it does not match
-        } // Ends the loop
-      } // Ends the function
+            // Checks if the name contains the search text
+            cards[i].style.display = ""; // Shows the card if it matches
+          } else {
+            // If the name does not match
+            cards[i].style.display = "none"; // Hides the card
+          } // Ends the if-else block
+        } // Ends the for loop
+      } // Ends the filterTutors function
     </script>
-    <!-- Ends script -->
+    <!-- Ends the search script -->
 
     <script>
-      // Starts Service Worker script
+      // Starts the Service Worker registration script
       if ("serviceWorker" in navigator) {
-        // Checks browser support
+        // Checks if the browser supports Service Workers
         navigator.serviceWorker
-          .register("/service-worker.js") // Registers the background file
+          .register("/service-worker.js") // Attempts to register the service worker file
           .then(function () {
-            // Success case
-            console.log("Service Worker registered successfully!"); // Success log
-          }) // Ends success block
+            // Runs if registration is successful
+            console.log("Service Worker registered successfully!"); // Logs success to the console
+          }) // Ends the .then block
           .catch(function (error) {
-            // Failure case
-            console.log("Service Worker registration failed:", error); // Error log
-          }); // Ends error block
-      } // Ends check
+            // Runs if registration fails
+            console.log("Service Worker registration failed:", error); // Logs error to the console
+          }); // Ends the .catch block
+      } // Ends the browser support check
     </script>
-    <!-- Ends script -->
+    <!-- Ends the Service Worker script -->
 
     <script>
-      // This function toggles the menu on and off
+      // Starts the mobile menu toggle script
       function toggleMenu() {
-        // Selects the nav-links element by its ID
-        const nav = document.getElementById("navLinks");
-        // Adds the 'active' class if it's missing, removes it if it's there
-        nav.classList.toggle("active");
-      }
+        // Function to open/close the mobile menu
+        const nav = document.getElementById("navLinks"); // Selects the navigation links container
+        nav.classList.toggle("active"); // Toggles the 'active' class which controls visibility in CSS
+      } // Ends the toggleMenu function
     </script>
+    <!-- Ends the menu script -->
   </body>
-  <!-- Closes body -->
+  <!-- Ends the body -->
 </html>
-<!-- Closes HTML -->
+<!-- Ends the HTML document -->

@@ -1,27 +1,18 @@
 <!doctype html>
 <!-- Declares this as an HTML5 document -->
 <html lang="en">
-  <!-- Sets language to English for screen readers -->
+  <!-- Sets language to English -->
   <head>
     <!-- Metadata section -->
     <meta charset="UTF-8" />
-    <!-- Allows special characters -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <!-- Mobile responsiveness -->
     <title>Select Class - Personalise Your Learning</title>
-    <!-- Tab title -->
     <link rel="icon" href="/static/images/icon.png" type="image/png" />
-    <!-- Tab icon -->
     <link rel="manifest" href="/static/manifest.json" />
-    <!-- PWA settings -->
     <link rel="stylesheet" href="/static/css/style.css" />
-    <!-- External CSS -->
   </head>
-  <!-- Closes head -->
   <body>
-    <!-- Starts visible content -->
-
-    <!-- ACCESSIBILITY: Skip link for keyboard users (SE-12-02) -->
+    <!-- Skip link for accessibility -->
     <a
       href="#main-content"
       class="skip-link"
@@ -37,9 +28,8 @@
     >
 
     <header class="navbar">
-      <!-- Navigation bar -->
+      <!-- Fixed Navbar Structure -->
       <div class="nav-left">
-        <!-- Logo container -->
         <div class="logo">
           <img
             src="/static/images/icon.png"
@@ -48,20 +38,27 @@
           />
         </div>
       </div>
-      <!-- End nav-left -->
-      <nav class="nav-right" aria-label="Main Site Navigation">
-        <!-- Labeled nav -->
-        <a href="/">Main Menu</a>
-        <!-- Home link -->
-        <a href="/account">Apply Now</a>
-        <!-- Account link -->
-        <a href="/about">About Us</a>
-        <!-- About link -->
-      </nav>
-      <!-- End nav -->
-    </header>
-    <!-- End header -->
 
+      <!-- Hamburger Menu Button -->
+      <button
+        class="menu-toggle"
+        aria-label="Open navigation menu"
+        onclick="toggleMenu()"
+      >
+        <span class="bar"></span>
+        <span class="bar"></span>
+        <span class="bar"></span>
+      </button>
+
+      <!-- Navigation Links -->
+      <nav class="nav-links" id="navLinks" aria-label="Main Site Navigation">
+        <a href="/">Main Menu</a>
+        <a href="/account">Apply Now</a>
+        <a href="/about">About Us</a>
+      </nav>
+    </header>
+
+    <!-- Progress Bar -->
     <nav
       class="steps-bar"
       style="
@@ -77,10 +74,8 @@
       <span style="color: #888">Quiz</span> |
       <span style="color: #888">Final</span>
     </nav>
-    <!-- End progress bar -->
 
     <main class="hero" id="main-content">
-      <!-- Main landmark for skip link -->
       <h1>Select Your Class</h1>
       <form
         action="/quiz"
@@ -96,15 +91,10 @@
         "
       >
         <input type="hidden" name="fullname" value="{{ fullname }}" />
-        <!-- Hidden data -->
         <input type="hidden" name="email" value="{{ email }}" />
-        <!-- Hidden data -->
         <input type="hidden" name="username" value="{{ username }}" />
-        <!-- Hidden data -->
         <input type="hidden" name="password" value="{{ password }}" />
-        <!-- Hidden data -->
 
-        <!-- ACCESSIBILITY: Label linked to select via 'for' and 'id' -->
         <label
           for="course_id"
           style="font-weight: bold; display: block; margin-bottom: 5px"
@@ -128,7 +118,6 @@
           {% endfor %}
         </select>
 
-        <!-- ACCESSIBILITY: Label linked to select via 'for' and 'id' -->
         <label
           for="time"
           style="font-weight: bold; display: block; margin-bottom: 5px"
@@ -153,7 +142,6 @@
         </select>
 
         <div style="display: flex; gap: 10px">
-          <!-- ACCESSIBILITY: Increased contrast for the Back button (Black text on grey) -->
           <a
             href="/account"
             style="
@@ -166,10 +154,8 @@
               border-radius: 5px;
               font-weight: bold;
             "
-            aria-label="Return to account details page"
             >Back</a
           >
-
           <button
             type="submit"
             style="
@@ -182,49 +168,23 @@
               font-weight: bold;
               cursor: pointer;
             "
-            aria-label="Confirm selection and move to tutor selection quiz"
           >
             Next: Select Tutor
           </button>
         </div>
-        <!-- End button group -->
       </form>
-      <!-- End form -->
     </main>
-    <!-- End main -->
 
     <footer class="footer">
-      <!-- Contact info -->
       <p>Not sure about something? <strong>Contact us!</strong></p>
       <p>Phone: 0400 000 000 | Email: info@tutors.com</p>
     </footer>
-    <!-- End footer -->
 
     <script>
-      if ("serviceWorker" in navigator) {
-        // Register service worker
-        navigator.serviceWorker
-          .register("/service-worker.js")
-          .then(function () {
-            console.log("Service Worker registered!");
-          })
-          .catch(function (error) {
-            console.log("Failed:", error);
-          });
-      }
-    </script>
-    <!-- End script -->
-
-    <script>
-      // This function toggles the menu on and off
       function toggleMenu() {
-        // Selects the nav-links element by its ID
         const nav = document.getElementById("navLinks");
-        // Adds the 'active' class if it's missing, removes it if it's there
         nav.classList.toggle("active");
       }
     </script>
   </body>
-  <!-- Ends body -->
 </html>
-<!-- Ends HTML -->

@@ -1,130 +1,102 @@
-<!-- Declares this document as HTML5 -->
 <!doctype html>
-<!-- Starts the HTML document in English -->
+<!-- Declares this as an HTML5 document -->
 <html lang="en">
-  <!-- Container for metadata and page settings -->
+  <!-- Sets language to English -->
   <head>
-    <!-- Sets the character encoding to UTF-8 -->
     <meta charset="UTF-8" />
-    <!-- Ensures the page is responsive on mobile devices -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <!-- Sets the title shown in the browser tab -->
     <title>Filter Tutors</title>
-    <!-- Links the external CSS file for styling -->
     <link rel="icon" href="/static/images/icon.png" type="image/png" />
-    <!-- Tells the browser to use icon.png as the tab icon.-->
     <link rel="manifest" href="/static/manifest.json" />
-    <!-- Tells the browser where to find PWA settings for install -->
     <link rel="stylesheet" href="/static/css/style.css" />
-    <!-- Closes the head section -->
   </head>
-
-  <!-- Starts the visible content of the page -->
   <body>
-    <!-- Top navigation bar container -->
     <header class="navbar">
-      <!-- Displays the brand logo text -->
-      <div class="logo">
-        <img src="/static/images/icon.png" alt="TutorMatch Logo" height="50" />
+      <!-- Fixed Navbar Structure -->
+      <div class="nav-left">
+        <div class="logo">
+          <img
+            src="/static/images/icon.png"
+            alt="TutorMatch Logo"
+            height="50"
+          />
+        </div>
+        <!-- Filter dropdown included in nav-left for consistency -->
+        <div class="search-bar">
+          <select id="traitFilter" onchange="filterByTrait()">
+            <option value="">-- All Traits --</option>
+            {% for trait in traits %}
+            <option value="{{ trait[1] }}">{{ trait[1] }}</option>
+            {% endfor %}
+          </select>
+        </div>
       </div>
-      <!-- Container for the search and filter tools -->
-      <div class="search-bar">
-        <!-- Dropdown that triggers a JavaScript filter function on change -->
-        <select id="traitFilter" onchange="filterByTrait()">
-          <!-- Default option to show all tutors -->
-          <option value="">-- All Traits --</option>
-          <!-- Starts a loop to display traits from the database -->
-          {% for trait in traits %}
-          <!-- Creates a dropdown option for each trait name -->
-          <option value="{{ trait[1] }}">{{ trait[1] }}</option>
-          <!-- Ends the trait loop -->
-          {% endfor %}
-          <!-- Closes the select dropdown -->
-        </select>
-        <!-- Closes the search-bar div -->
-      </div>
-      <!-- Closes the header section -->
+
+      <!-- Hamburger Menu Button -->
+      <button
+        class="menu-toggle"
+        aria-label="Open navigation menu"
+        onclick="toggleMenu()"
+      >
+        <span class="bar"></span>
+        <span class="bar"></span>
+        <span class="bar"></span>
+      </button>
+
+      <!-- Navigation Links -->
+      <nav class="nav-links" id="navLinks" aria-label="Main Site Navigation">
+        <a href="/">Main Menu</a>
+        <a href="/account">Apply Now</a>
+        <a href="/about">About Us</a>
+      </nav>
     </header>
 
-    <!-- Main content container for the tutor selection -->
     <main class="hero">
-      <!-- Main page heading -->
       <h1>Select Your Tutor</h1>
-      <!-- Instructions for filtering tutors -->
       <p>
         Pick a trait to filter. <strong>Tip:</strong> If you don't want a trait,
         select a different one.
       </p>
 
-      <!-- Form that sends data to the final confirmation page -->
-      <!-- Form starts: method must be POST for security (SE-12-07) and reliable offline use (SE-12-03) -->
       <form action="/final" method="POST">
-        <!-- Form to send final selection -->
         <input type="hidden" name="fullname" value="{{ fullname }}" />
-        <!-- Stores name -->
         <input type="hidden" name="email" value="{{ email }}" />
-        <!-- Stores email -->
         <input type="hidden" name="username" value="{{ username }}" />
-        <!-- Stores username -->
         <input type="hidden" name="password" value="{{ password }}" />
-        <!-- Stores hashed PW -->
         <input type="hidden" name="course_id" value="{{ course_id }}" />
-        <!-- THE FIX: Stores Course ID -->
         <input type="hidden" name="time" value="{{ time }}" />
-        <!-- Stores time slot -->
 
         <div class="tutor-grid">
-          <!-- Grid for tutors -->
           {% for tutor in tutors %}
-          <!-- Loops through joined tutor data -->
           <div class="tutor-card" data-traits="{{ tutor['traits'] }}">
-            <!-- Stores traits for JS filter -->
             <h3>{{ tutor['full_name'] }}</h3>
-            <!-- Displays Name -->
             <p><strong>Learning Styles:</strong> {{ tutor['traits'] }}</p>
-            <!-- Displays Traits -->
             <input
               type="radio"
               name="selected_tutor_id"
               value="{{ tutor['tutor_id'] }}"
               required
             />
-            <!-- REMOVED THE DUPLICATE /> THAT WAS HERE -->
           </div>
-          <!-- Ends card -->
           {% endfor %}
-          <!-- Ends loop -->
         </div>
-        <!-- Ends grid -->
-        <button type="submit" class="btn">Confirm Registration</button>
-        <!-- Submit button -->
+        <button type="submit" class="btn" style="margin-top: 20px">
+          Confirm Registration
+        </button>
       </form>
-      <!-- Ends form -->
-      <!-- Closes the main section -->
     </main>
 
-    <!-- Bottom footer containing contact information -->
     <footer class="footer">
-      <!-- Call to action for user questions -->
       <p>Not sure about something? <strong>Contact us!</strong></p>
-      <!-- Specific phone and email contact details -->
       <p>Phone: 0400 000 000 | Email: info@tutors.com</p>
-      <!-- Closes the footer section -->
     </footer>
+
     <script>
-      // Defines the function to filter tutors by traits
       function filterByTrait() {
-        // Gets the selected trait from dropdown
         let selectedTrait = document.getElementById("traitFilter").value;
-        // Gets all tutor cards
         let cards = document.getElementsByClassName("tutor-card");
-
-        // Loops through every card
         for (let i = 0; i < cards.length; i++) {
-          // Gets the traits from the data attribute
           let tutorTraits = cards[i].getAttribute("data-traits");
-
-          // Shows card if no filter or if tutor has the trait
           if (selectedTrait === "" || tutorTraits.includes(selectedTrait)) {
             cards[i].style.display = "";
           } else {
@@ -132,28 +104,9 @@
           }
         }
       }
-    </script>
 
-    <script>
-      // Service worker registration
-      if ("serviceWorker" in navigator) {
-        navigator.serviceWorker
-          .register("/service-worker.js")
-          .then(function () {
-            console.log("Service Worker registered successfully!");
-          })
-          .catch(function (error) {
-            console.log("Service Worker registration failed:", error);
-          });
-      }
-    </script>
-
-    <script>
-      // This function toggles the menu on and off
       function toggleMenu() {
-        // Selects the nav-links element by its ID
         const nav = document.getElementById("navLinks");
-        // Adds the 'active' class if it's missing, removes it if it's there
         nav.classList.toggle("active");
       }
     </script>

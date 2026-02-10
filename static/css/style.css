@@ -1,104 +1,169 @@
-/* =========================================
-   NAVIGATION BAR - Top Blue Header
-   ========================================= */
+/* ========================================= */
+/* GLOBAL RESETS - Basic setup for the page */
+/* ========================================= */
+* {
+  margin: 0; /* Removes default spacing outside elements */
+  padding: 0; /* Removes default spacing inside elements */
+  box-sizing: border-box; /* Ensures padding doesn't increase element width */
+  font-family: Arial, sans-serif; /* Sets the font for the whole website */
+}
+
+/* ========================================= */
+/* NAVIGATION BAR - Top Blue Header */
+/* ========================================= */
 .navbar {
-  display: flex; /* Aligns items in a row */
-  justify-content: space-between; /* Pushes Logo to left, Links to right */
-  align-items: center; /* Vertically centers everything */
-  padding: 15px 30px; /* Spacing */
-  background-color: #3b7ec4; /* Blue background */
-  font-weight: bold;
-  color: white;
+  display: flex; /* Aligns items in a horizontal row */
+  justify-content: space-between; /* Pushes Logo to left, Menu to right */
+  align-items: center; /* Vertically centers everything in the bar */
+  padding: 15px 30px; /* Adds space inside the blue bar */
+  background-color: #3b7ec4; /* Sets the blue background color */
+  font-weight: bold; /* Makes text bold */
+  color: white; /* Sets text color to white */
   position: relative; /* Needed for mobile menu positioning */
 }
 
-/* Group logo and search on the left */
+/* Group logo and search on the left side */
 .nav-left {
-  display: flex;
-  align-items: center;
-  gap: 25px;
+  display: flex; /* Aligns logo and search bar side-by-side */
+  align-items: center; /* Vertically centers them */
+  gap: 25px; /* Adds space between the logo and search bar */
 }
 
-/* Style the Search Box */
+/* Style the Search Box Input */
 #tutorSearch {
-  width: 300px;
-  padding: 8px 15px;
-  border-radius: 20px;
-  border: none;
-  outline: none;
+  width: 300px; /* Sets a fixed width for the search bar */
+  padding: 8px 15px; /* Adds space inside the typing area */
+  border-radius: 20px; /* Rounds the corners */
+  border: none; /* Removes the default grey border */
+  outline: none; /* Removes the blue glow when clicking */
 }
 
-/* =========================================
-   DESKTOP NAVIGATION (Big Screen)
-   ========================================= */
-/* The container for the links */
+/* ========================================= */
+/* DESKTOP NAVIGATION (Big Screen) */
+/* ========================================= */
+
+/* The container for the links (Home, Apply, etc.) */
 .nav-links {
-  display: flex; /* Horizontal row */
-  align-items: center;
+  display: flex; /* Aligns links in a horizontal row */
+  align-items: center; /* Vertically centers them */
 }
 
-/* The actual links */
+/* The actual link text styles */
 .nav-links a {
-  color: white;
-  text-decoration: none;
-  margin-left: 20px; /* Space between links */
-  font-weight: bold;
+  color: white; /* Text color white */
+  text-decoration: none; /* Removes underline */
+  margin-left: 20px; /* Adds space between each link */
+  font-weight: bold; /* Makes text bold */
+  font-size: 16px; /* Sets text size */
 }
 
-/* Hide the hamburger button on Desktop */
+/* Hover effect for links */
+.nav-links a:hover {
+  text-decoration: underline; /* Adds underline when mouse is over */
+}
+
+/* Hide the hamburger button on Desktop (Big screens) */
 .menu-toggle {
-  display: none;
+  display: none; /* Do not show this element */
 }
 
-/* =========================================
-   MOBILE NAVIGATION (Small Screen)
-   ========================================= */
+/* ========================================= */
+/* MOBILE NAVIGATION (Small Screen) */
+/* ========================================= */
 @media (max-width: 768px) {
+  /* Rules for screens smaller than 768px */
+
   /* Show the hamburger button */
   .menu-toggle {
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
-    background: none;
-    border: none;
-    cursor: pointer;
+    display: flex; /* Uses flexbox to stack lines */
+    flex-direction: column; /* Stacks lines vertically */
+    gap: 5px; /* Space between lines */
+    background: none; /* No background color */
+    border: none; /* No border */
+    cursor: pointer; /* Shows hand cursor on hover */
   }
 
-  /* Style the 3 lines */
+  /* Style the 3 lines of the hamburger icon */
   .bar {
-    width: 25px;
-    height: 3px;
-    background-color: white;
-    border-radius: 2px;
+    width: 25px; /* Width of the line */
+    height: 3px; /* Height of the line */
+    background-color: white; /* Color of the line */
+    border-radius: 2px; /* Rounds the edges of the line */
   }
 
-  /* Hide the links initially */
+  /* Hide the links initially on mobile */
   .nav-links {
     display: none; /* Hidden by default */
-    flex-direction: column; /* Stack vertically */
-    position: absolute; /* Float on top */
-    top: 100%; /* Below the blue bar */
-    right: 0; /* Align right */
-    background-color: #3b7ec4; /* Blue background */
-    width: 100%; /* Full width */
-    text-align: center;
-    padding: 20px 0;
-    z-index: 1000;
+    flex-direction: column; /* Stack links vertically */
+    position: absolute; /* Float on top of other content */
+    top: 100%; /* Position directly below the blue bar */
+    right: 0; /* Align to the right edge */
+    background-color: #3b7ec4; /* Match blue background */
+    width: 100%; /* Stretch across full width */
+    text-align: center; /* Center the text */
+    padding: 20px 0; /* Add top/bottom spacing */
+    z-index: 1000; /* Ensure it sits on top of images/text */
   }
 
-  /* Show the menu when active class is added by JS */
+  /* Show the menu when 'active' class is added by JavaScript */
   .nav-links.active {
-    display: flex;
+    display: flex; /* Shows the hidden menu */
   }
 
   /* Spacing for mobile links */
   .nav-links a {
-    margin: 15px 0;
-    margin-left: 0;
+    margin: 15px 0; /* Adds vertical space between links */
+    margin-left: 0; /* Removes the desktop left margin */
   }
 
   /* Shrink search bar on mobile so it fits */
   #tutorSearch {
-    width: 140px;
+    width: 140px; /* Smaller width for phones */
   }
+}
+
+/* ========================================= */
+/* OTHER PAGE STYLES (Cards, Forms, etc.) */
+/* ========================================= */
+
+.hero {
+  text-align: center; /* Centers text in main section */
+  padding: 50px 20px; /* Adds spacing around content */
+  background-color: #f4f4f4; /* Light grey background */
+}
+
+.tutor-grid {
+  display: flex; /* Aligns cards in a row */
+  justify-content: center; /* Centers cards horizontally */
+  flex-wrap: wrap; /* Allows cards to wrap to next line */
+  gap: 20px; /* Space between cards */
+  padding: 20px; /* Padding around the grid */
+}
+
+.tutor-card {
+  background: white; /* White card background */
+  border-radius: 10px; /* Rounded corners */
+  padding: 20px; /* Internal spacing */
+  width: 300px; /* Fixed width per card */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+  text-align: left; /* Aligns text inside card to left */
+  display: flex; /* Flex layout for image and text */
+  align-items: center; /* Vertically center items */
+  gap: 15px; /* Space between image and text */
+}
+
+.tutor-thumb {
+  width: 80px; /* Image width */
+  height: 80px; /* Image height */
+  border-radius: 50%; /* Makes image a perfect circle */
+  object-fit: cover; /* Crops image to fit circle */
+  border: 2px solid #4a90d9; /* Blue border around image */
+}
+
+.footer {
+  background-color: #333; /* Dark background */
+  color: white; /* White text */
+  text-align: center; /* Center text */
+  padding: 20px; /* Spacing */
+  margin-top: 50px; /* Push to bottom */
 }
