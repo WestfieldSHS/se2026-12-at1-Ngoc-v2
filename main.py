@@ -173,12 +173,19 @@ def final():  # Final page function
 
     conn = get_db()  # Connects to database
 
+    # --- THE FIX IS HERE ---
     existing = conn.execute(
         "SELECT student_id FROM students WHERE username = ?", (user,)
     ).fetchone()  # Checks for duplicate
+
     if existing:  # If username taken
         conn.close()  # Close connection
-        return "Error: Username already exists.", 400  # Return error
+        # Renders the account page with the error so it looks nice
+        return render_template(
+            "web1/account.html",
+            error="Error: That username was just taken. Please try a different one.",
+        )
+    # -----------------------
 
     sql = """
         INSERT INTO students 

@@ -1,83 +1,75 @@
-// Names the cache so we can version it and force updates when we change files
-const CACHE_NAME = "tutor-app-v7";
+// Names the cache. I bumped the version to v8 to force a refresh.
+const CACHE_NAME = "tutor-app-v8";
 
-// Lists only files that are guaranteed to exist and are safe to precache
+// Lists files to cache. CRITICAL: style.css is here!
 const FILES_TO_CACHE = [
-  "/", // Caches the home page so it can open offline
-  "/static/offline.html", // Caches the offline fallback page
-  "/static/manifest.json", // Caches the PWA manifest so it does not fail offline
-  "/static/css/style.css", // Caches the stylesheet for consistent design offline
-  "/static/images/icon.png", // Caches the site logo (and tab icon if you use it)
-  "/static/images/john.jpg", // Caches tutor image
-  "/static/images/jane.jpg", // Caches tutor image
-  "/static/images/mike.jpg", // Caches tutor image
-  "/static/images/sarah.jpg", // Caches tutor image
-  "/static/images/icon-192.png", // Caches the PWA icon
-  "/static/images/icon-512.png", // Caches the PWA icon
-]; // Ends the precache list
+  "/",
+  "/static/offline.html",
+  "/static/manifest.json",
+  "/static/css/style.css", // <--- THIS is what fixes the ugly offline mode
+  "/static/images/icon.png",
+  "/static/images/john.jpg",
+  "/static/images/jane.jpg",
+  "/static/images/mike.jpg",
+  "/static/images/sarah.jpg",
+  "/static/images/icon-192.png",
+  "/static/images/icon-512.png",
+];
 
-// Runs once when the service worker is installed
+// Install Event - Caches the files
 self.addEventListener("install", (event) => {
-  // Forces the browser to wait until caching finishes before completing install
   event.waitUntil(
-    // Opens (or creates) the cache storage using our versioned name
     caches.open(CACHE_NAME).then((cache) => {
-      // Adds all listed files to the cache (fails if any file path is wrong)
+      console.log("Caching files...");
       return cache.addAll(FILES_TO_CACHE);
-    })
-  ); // Ends install waitUntil
-}); // Ends install event listener
+    }),
+  );
+  // Forces the waiting service worker to become the active one immediately
+  self.skipWaiting();
+});
 
-// Runs when the service worker activates (after install)
+// Activate Event - Cleans up old caches
 self.addEventListener("activate", (event) => {
-  // Forces the browser to wait while we clean up old cache versions
   event.waitUntil(
-    // Gets every cache name currently stored in the browser
     caches.keys().then((keys) => {
-      // Deletes all caches that do not match the current version name
       return Promise.all(
         keys.map((key) => {
-          // Checks if this cache is an older version
           if (key !== CACHE_NAME) {
-            // Deletes the old cache to prevent conflicts
+            console.log("Deleting old cache:", key);
             return caches.delete(key);
-          } // Ends old-cache check
-          // Returns null when we keep the current cache
-          return null;
-        })
-      ); // Ends Promise.all
-    })
-  ); // Ends activate waitUntil
-}); // Ends activate event listener
+          }
+        }),
+      );
+    }),
+  );
+  // Claims control of all clients immediately
+  self.clients.claim();
+});
 
-// Runs every time the browser requests something (pages, images, css, js)
+// Fetch Event - Serves files from cache or network
 self.addEventListener("fetch", (event) => {
-  // Checks if this request is loading a full HTML page (navigation)
-  const isNavigation = event.request.mode === "navigate";
+  // 1. Navigation Requests (HTML Pages)
+  if (event.request.mode === "navigate") {
+    event.respondWith(
+      fetch(event.request).catch(() => {
+        // If network fails, serve the offline page
+        return caches.match("/static/offline.html");
+      }),
+    );
+    return;
+  }
 
-  // Intercepts the request and responds with our custom logic
+  // 2. Asset Requests (CSS, Images, JS)
   event.respondWith(
-    // First tries to return a cached version of the request (ignores ?query strings)
-    caches.match(event.request, { ignoreSearch: true }).then((cached) => {
-      // If we found a cached response, return it immediately
-      if (cached) {
-        return cached;
-      } // Ends cached check
-
-      // If it is a page navigation, try network, then fall back to offline page
-      if (isNavigation) {
-        // Attempts to fetch the page from the internet when online
-        return fetch(event.request).catch(() => {
-          // If offline, return the offline fallback page from cache
-          return caches.match("/static/offline.html");
-        });
-      } // Ends navigation handling
-
-      // For non-page files (images/css), try network, then try cache
-      return fetch(event.request).catch(() => {
-        // If offline, try to find a cached copy of that file
-        return caches.match(event.request, { ignoreSearch: true });
-      }); // Ends non-navigation handling
-    })
-  ); // Ends respondWith
-}); // Ends fetch event listener
+    caches
+      .match(event.request, { ignoreSearch: true })
+      .then((cachedResponse) => {
+        // If found in cache, return it
+        if (cachedResponse) {
+          return cachedResponse;
+        }
+        // If not in cache, try network
+        return fetch(event.request);
+      }),
+  );
+});

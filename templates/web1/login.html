@@ -11,6 +11,8 @@
     <link rel="stylesheet" href="/static/css/style.css" />
   </head>
   <body>
+    <!-- Skip link for keyboard users (no inline styles so CSS can control it) -->
+    <a href="#main-content" class="skip-link">Skip to main content</a>
     <header class="navbar">
       <!-- Fixed Navbar Structure -->
       <div class="nav-left">
@@ -42,6 +44,9 @@
       </nav>
     </header>
 
+
+    <!-- Main landmark with an id that matches the skip link target -->
+    <main id="main-content">
     <main class="hero">
       <h1>Login to Your Account</h1>
       <form

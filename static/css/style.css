@@ -1,169 +1,334 @@
 /* ========================================= */
-/* GLOBAL RESETS - Basic setup for the page */
+/* GLOBAL RESETS & TYPOGRAPHY */
 /* ========================================= */
 * {
-  margin: 0; /* Removes default spacing outside elements */
-  padding: 0; /* Removes default spacing inside elements */
-  box-sizing: border-box; /* Ensures padding doesn't increase element width */
-  font-family: Arial, sans-serif; /* Sets the font for the whole website */
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box; /* Keeps padding inside the width */
+  font-family:
+    "Segoe UI", Tahoma, Geneva, Verdana, sans-serif; /* Neater, modern font */
+}
+
+.skip-link {
+  /* styles the skip link element */
+  position: absolute; /* removes it from normal document flow */
+  left: -10000px; /* hides it off-screen by default */
+  top: auto; /* keeps it from affecting layout */
+  width: 1px; /* makes hidden element tiny */
+  height: 1px; /* makes hidden element tiny */
+  overflow: hidden; /* prevents it from showing while hidden */
+  background: #000000; /* sets high-contrast background when shown */
+  color: #ffffff; /* sets high-contrast text when shown */
+  padding: 10px 12px; /* increases clickable area */
+  border-radius: 6px; /* matches your rounded UI style */
+  text-decoration: none; /* removes underline for button-like look */
+} /* ends .skip-link */
+
+.skip-link:focus {
+  /* shows the link when keyboard users tab to it */
+  left: 10px; /* moves it onto the screen */
+  top: 10px; /* places it near the top */
+  width: auto; /* lets it size normally */
+  height: auto; /* lets it size normally */
+  overflow: visible; /* allows it to display fully */
+  z-index: 2000; /* ensures it sits above the navbar */
+} /* ends focus style */
+
+:focus-visible {
+  /* shows a clear outline for keyboard focus */
+  outline: 3px solid #ffbf47; /* strong high-contrast outline color */
+  outline-offset: 3px; /* separates outline from the element */
+} /* ends focus-visible rule */
+
+body {
+  background-color: #f9f9f9; /* Softer background color */
+  color: #333; /* Dark grey text is easier to read than black */
+  line-height: 1.6; /* Better spacing between lines of text */
 }
 
 /* ========================================= */
-/* NAVIGATION BAR - Top Blue Header */
+/* NAVIGATION BAR */
 /* ========================================= */
 .navbar {
-  display: flex; /* Aligns items in a horizontal row */
-  justify-content: space-between; /* Pushes Logo to left, Menu to right */
-  align-items: center; /* Vertically centers everything in the bar */
-  padding: 15px 30px; /* Adds space inside the blue bar */
-  background-color: #3b7ec4; /* Sets the blue background color */
-  font-weight: bold; /* Makes text bold */
-  color: white; /* Sets text color to white */
-  position: relative; /* Needed for mobile menu positioning */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 40px; /* More breathing room on sides */
+  background-color: #3b7ec4; /* The main blue color */
+  color: white;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow under navbar */
+  position: sticky; /* Keeps navbar at top when scrolling */
+  top: 0;
+  z-index: 1000; /* Ensures it stays on top */
 }
 
-/* Group logo and search on the left side */
+/* LEFT SIDE: Logo & Search */
 .nav-left {
-  display: flex; /* Aligns logo and search bar side-by-side */
-  align-items: center; /* Vertically centers them */
-  gap: 25px; /* Adds space between the logo and search bar */
+  display: flex;
+  align-items: center;
+  gap: 30px; /* Nice space between logo and search */
 }
 
-/* Style the Search Box Input */
+.logo img {
+  display: block;
+  height: 50px;
+  width: auto;
+  transition: transform 0.3s ease; /* Smooth hover effect for logo */
+}
+
+.logo img:hover {
+  transform: scale(1.05); /* Slight grow effect on logo */
+}
+
 #tutorSearch {
-  width: 300px; /* Sets a fixed width for the search bar */
-  padding: 8px 15px; /* Adds space inside the typing area */
-  border-radius: 20px; /* Rounds the corners */
-  border: none; /* Removes the default grey border */
-  outline: none; /* Removes the blue glow when clicking */
+  width: 300px;
+  padding: 10px 20px;
+  border-radius: 25px; /* Pill shape */
+  border: none;
+  outline: none;
+  font-size: 14px;
+  transition: box-shadow 0.3s ease;
 }
 
-/* ========================================= */
-/* DESKTOP NAVIGATION (Big Screen) */
-/* ========================================= */
+#tutorSearch:focus {
+  box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.4); /* Glow when clicking search */
+}
 
-/* The container for the links (Home, Apply, etc.) */
+/* RIGHT SIDE: Navigation Links */
 .nav-links {
-  display: flex; /* Aligns links in a horizontal row */
-  align-items: center; /* Vertically centers them */
+  display: flex;
+  align-items: center;
+  gap: 30px;
 }
 
-/* The actual link text styles */
 .nav-links a {
-  color: white; /* Text color white */
-  text-decoration: none; /* Removes underline */
-  margin-left: 20px; /* Adds space between each link */
-  font-weight: bold; /* Makes text bold */
-  font-size: 16px; /* Sets text size */
+  color: white;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 16px;
+  position: relative;
+  transition: opacity 0.3s;
 }
 
-/* Hover effect for links */
 .nav-links a:hover {
-  text-decoration: underline; /* Adds underline when mouse is over */
+  opacity: 0.8; /* Slight fade on hover */
 }
 
-/* Hide the hamburger button on Desktop (Big screens) */
+/* HAMBURGER MENU (Hidden on Desktop) */
 .menu-toggle {
-  display: none; /* Do not show this element */
+  display: none;
 }
 
 /* ========================================= */
-/* MOBILE NAVIGATION (Small Screen) */
+/* HERO SECTION (Main Banner) */
 /* ========================================= */
-@media (max-width: 768px) {
-  /* Rules for screens smaller than 768px */
-
-  /* Show the hamburger button */
-  .menu-toggle {
-    display: flex; /* Uses flexbox to stack lines */
-    flex-direction: column; /* Stacks lines vertically */
-    gap: 5px; /* Space between lines */
-    background: none; /* No background color */
-    border: none; /* No border */
-    cursor: pointer; /* Shows hand cursor on hover */
-  }
-
-  /* Style the 3 lines of the hamburger icon */
-  .bar {
-    width: 25px; /* Width of the line */
-    height: 3px; /* Height of the line */
-    background-color: white; /* Color of the line */
-    border-radius: 2px; /* Rounds the edges of the line */
-  }
-
-  /* Hide the links initially on mobile */
-  .nav-links {
-    display: none; /* Hidden by default */
-    flex-direction: column; /* Stack links vertically */
-    position: absolute; /* Float on top of other content */
-    top: 100%; /* Position directly below the blue bar */
-    right: 0; /* Align to the right edge */
-    background-color: #3b7ec4; /* Match blue background */
-    width: 100%; /* Stretch across full width */
-    text-align: center; /* Center the text */
-    padding: 20px 0; /* Add top/bottom spacing */
-    z-index: 1000; /* Ensure it sits on top of images/text */
-  }
-
-  /* Show the menu when 'active' class is added by JavaScript */
-  .nav-links.active {
-    display: flex; /* Shows the hidden menu */
-  }
-
-  /* Spacing for mobile links */
-  .nav-links a {
-    margin: 15px 0; /* Adds vertical space between links */
-    margin-left: 0; /* Removes the desktop left margin */
-  }
-
-  /* Shrink search bar on mobile so it fits */
-  #tutorSearch {
-    width: 140px; /* Smaller width for phones */
-  }
-}
-
-/* ========================================= */
-/* OTHER PAGE STYLES (Cards, Forms, etc.) */
-/* ========================================= */
-
 .hero {
-  text-align: center; /* Centers text in main section */
-  padding: 50px 20px; /* Adds spacing around content */
-  background-color: #f4f4f4; /* Light grey background */
+  text-align: center;
+  padding: 80px 20px; /* More vertical space */
+  background: white;
+  margin-bottom: 20px;
+}
+
+.hero h1 {
+  font-size: 2.5rem; /* Bigger title */
+  margin-bottom: 10px;
+  color: #2c3e50;
+}
+
+.hero p {
+  font-size: 1.2rem;
+  color: #666;
+  margin-bottom: 25px;
+}
+
+.hero a {
+  /* "Get Started" Button Style */
+  display: inline-block;
+  padding: 15px 40px;
+  background-color: #4a90d9;
+  color: white;
+  text-decoration: none;
+  border-radius: 30px;
+  font-weight: bold;
+  font-size: 1.1rem;
+  transition:
+    background-color 0.3s,
+    transform 0.2s;
+  box-shadow: 0 4px 6px rgba(74, 144, 217, 0.3);
+}
+
+.hero a:hover {
+  background-color: #357abd; /* Darker blue on hover */
+  transform: translateY(-2px); /* Slight lift */
+}
+
+/* ========================================= */
+/* TUTOR CARDS & GRID */
+/* ========================================= */
+.tutors-section h2 {
+  text-align: center;
+  font-size: 2rem;
+  margin-bottom: 40px;
+  color: #333;
 }
 
 .tutor-grid {
-  display: flex; /* Aligns cards in a row */
-  justify-content: center; /* Centers cards horizontally */
-  flex-wrap: wrap; /* Allows cards to wrap to next line */
-  gap: 20px; /* Space between cards */
-  padding: 20px; /* Padding around the grid */
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 30px; /* Better spacing between cards */
+  padding: 20px 40px;
+  max-width: 1200px;
+  margin: 0 auto; /* Centers the whole grid */
 }
 
 .tutor-card {
-  background: white; /* White card background */
-  border-radius: 10px; /* Rounded corners */
-  padding: 20px; /* Internal spacing */
-  width: 300px; /* Fixed width per card */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
-  text-align: left; /* Aligns text inside card to left */
-  display: flex; /* Flex layout for image and text */
-  align-items: center; /* Vertically center items */
-  gap: 15px; /* Space between image and text */
+  background: white;
+  border-radius: 15px; /* Softer corners */
+  padding: 25px;
+  width: 320px; /* Slightly wider cards */
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05); /* Soft shadow */
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease; /* ANIMATION SETUP */
+  border: 1px solid #eee; /* Very subtle border */
+}
+
+/* consistency across the website */
+.card-form {
+  /* reusable form container style */
+  max-width: 450px; /* keeps forms readable */
+  margin: 20px auto; /* centers the form */
+  text-align: left; /* aligns labels left */
+  background: #ffffff; /* white card background */
+  padding: 30px; /* inner spacing */
+  border-radius: 10px; /* rounded corners */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* subtle shadow */
+} /* ends card-form */
+
+/* HOVER EFFECT: THIS MAKES THEM FLOAT */
+.tutor-card:hover {
+  transform: translateY(-10px); /* Moves up 10 pixels */
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15); /* Shadow gets bigger */
+  border-color: #4a90d9; /* Border turns blue */
 }
 
 .tutor-thumb {
-  width: 80px; /* Image width */
-  height: 80px; /* Image height */
-  border-radius: 50%; /* Makes image a perfect circle */
-  object-fit: cover; /* Crops image to fit circle */
-  border: 2px solid #4a90d9; /* Blue border around image */
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid #e0e0e0; /* Grey border around image */
 }
 
+.tutor-info h3 {
+  margin-bottom: 5px;
+  color: #222;
+  font-size: 1.2rem;
+}
+
+.tutor-info p {
+  font-size: 0.95rem;
+  color: #555;
+  line-height: 1.4;
+}
+
+/* ========================================= */
+/* FOOTER */
+/* ========================================= */
 .footer {
-  background-color: #333; /* Dark background */
-  color: white; /* White text */
-  text-align: center; /* Center text */
-  padding: 20px; /* Spacing */
-  margin-top: 50px; /* Push to bottom */
+  background-color: #2c3e50; /* Darker, more professional grey */
+  color: white;
+  text-align: center;
+  padding: 40px 20px;
+  margin-top: 60px;
+}
+
+.footer p {
+  margin-bottom: 10px;
+  opacity: 0.8;
+}
+
+.help-text {
+  /* styles small helper text under fields */
+  margin-top: 6px; /* adds spacing */
+  margin-bottom: 10px; /* adds spacing */
+  color: #555555; /* readable grey */
+  font-size: 0.95rem; /* slightly smaller than body text */
+} /* ends help-text */
+
+@media (prefers-reduced-motion: reduce) {
+  /* respects user motion settings */
+  * {
+    /* targets all elements */
+    scroll-behavior: auto; /* disables smooth scrolling */
+    transition: none !important; /* removes transitions that can cause motion */
+    animation: none !important; /* removes animations that can cause motion */
+  } /* ends universal rule */
+} /* ends media query */
+/* ========================================= */
+/* MOBILE RESPONSIVENESS */
+/* ========================================= */
+@media (max-width: 768px) {
+  .navbar {
+    padding: 15px 20px;
+  }
+
+  .nav-left {
+    gap: 15px;
+    width: 100%; /* Ensures search bar can shrink properly */
+  }
+
+  /* Search bar shrinks on mobile but stays visible */
+  #tutorSearch {
+    width: 100%;
+    max-width: 180px; /* Prevents it from hitting the logo */
+    padding: 8px 15px;
+    font-size: 13px;
+  }
+
+  .logo img {
+    height: 40px; /* Slightly smaller logo on mobile */
+  }
+
+  /* Hamburger Menu Button */
+  .menu-toggle {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    margin-left: 20px; /* Pushes it away from search */
+  }
+
+  .bar {
+    width: 28px;
+    height: 3px;
+    background-color: white;
+    border-radius: 3px;
+    transition: 0.3s;
+  }
+
+  /* Mobile Dropdown Menu */
+  .nav-links {
+    display: none;
+    flex-direction: column;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    background-color: #3b7ec4;
+    padding: 20px 0;
+    text-align: center;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    gap: 20px;
+  }
+
+  .nav-links.active {
+    display: flex;
+  }
 }
