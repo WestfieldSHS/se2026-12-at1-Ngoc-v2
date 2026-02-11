@@ -1,334 +1,534 @@
 /* ========================================= */
-/* GLOBAL RESETS & TYPOGRAPHY */
+/* GLOBAL RESETS & TYPOGRAPHY                */
 /* ========================================= */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box; /* Keeps padding inside the width */
-  font-family:
-    "Segoe UI", Tahoma, Geneva, Verdana, sans-serif; /* Neater, modern font */
+
+:root {
+  /* stores reusable theme values */
+  --color-bg: #f9f9f9; /* main page background */
+  --color-text: #333333; /* main text colour */
+  --color-muted: #666666; /* secondary text */
+  --color-brand: #3b7ec4; /* navbar + accent blue */
+  --color-accent: #4a90d9; /* button blue */
+  --color-accent-dark: #357abd; /* hover button blue */
+  --color-focus: #ffbf47; /* keyboard focus outline */
+  --color-footer: #2c3e50; /* footer background */
+  --radius-sm: 6px; /* small rounding */
+  --radius-md: 10px; /* medium rounding */
+  --radius-lg: 15px; /* large rounding */
+  --shadow-sm: 0 4px 8px rgba(0, 0, 0, 0.1); /* small shadow */
+  --shadow-md: 0 5px 15px rgba(0, 0, 0, 0.05); /* medium shadow */
+  --shadow-lg: 0 15px 30px rgba(0, 0, 0, 0.15); /* large shadow */
 }
 
-.skip-link {
-  /* styles the skip link element */
-  position: absolute; /* removes it from normal document flow */
-  left: -10000px; /* hides it off-screen by default */
-  top: auto; /* keeps it from affecting layout */
-  width: 1px; /* makes hidden element tiny */
-  height: 1px; /* makes hidden element tiny */
-  overflow: hidden; /* prevents it from showing while hidden */
-  background: #000000; /* sets high-contrast background when shown */
-  color: #ffffff; /* sets high-contrast text when shown */
-  padding: 10px 12px; /* increases clickable area */
-  border-radius: 6px; /* matches your rounded UI style */
-  text-decoration: none; /* removes underline for button-like look */
-} /* ends .skip-link */
-
-.skip-link:focus {
-  /* shows the link when keyboard users tab to it */
-  left: 10px; /* moves it onto the screen */
-  top: 10px; /* places it near the top */
-  width: auto; /* lets it size normally */
-  height: auto; /* lets it size normally */
-  overflow: visible; /* allows it to display fully */
-  z-index: 2000; /* ensures it sits above the navbar */
-} /* ends focus style */
-
-:focus-visible {
-  /* shows a clear outline for keyboard focus */
-  outline: 3px solid #ffbf47; /* strong high-contrast outline color */
-  outline-offset: 3px; /* separates outline from the element */
-} /* ends focus-visible rule */
+* {
+  margin: 0; /* removes default margin */
+  padding: 0; /* removes default padding */
+  box-sizing: border-box; /* keeps padding inside widths */
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif; /* font */
+}
 
 body {
-  background-color: #f9f9f9; /* Softer background color */
-  color: #333; /* Dark grey text is easier to read than black */
-  line-height: 1.6; /* Better spacing between lines of text */
+  background-color: var(--color-bg); /* sets background */
+  color: var(--color-text); /* sets text colour */
+  line-height: 1.6; /* improves readability */
 }
 
 /* ========================================= */
-/* NAVIGATION BAR */
+/* ACCESSIBILITY                              */
 /* ========================================= */
+
+.skip-link {
+  position: absolute; /* removes from normal flow */
+  left: -10000px; /* hides off-screen */
+  top: auto; /* prevents layout impact */
+  width: 1px; /* tiny size while hidden */
+  height: 1px; /* tiny size while hidden */
+  overflow: hidden; /* hides contents */
+  background: #000000; /* high contrast background */
+  color: #ffffff; /* high contrast text */
+  padding: 10px 12px; /* clickable area */
+  border-radius: var(--radius-sm); /* rounding */
+  text-decoration: none; /* removes underline */
+}
+
+.skip-link:focus {
+  left: 10px; /* moves into view */
+  top: 10px; /* positions near top */
+  width: auto; /* natural width */
+  height: auto; /* natural height */
+  overflow: visible; /* shows content */
+  z-index: 2000; /* above navbar */
+}
+
+:focus-visible {
+  outline: 3px solid var(--color-focus); /* visible focus ring */
+  outline-offset: 3px; /* offset from element */
+}
+
+/* ========================================= */
+/* NAVIGATION BAR                             */
+/* ========================================= */
+
 .navbar {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 15px 40px; /* More breathing room on sides */
-  background-color: #3b7ec4; /* The main blue color */
-  color: white;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow under navbar */
-  position: sticky; /* Keeps navbar at top when scrolling */
-  top: 0;
-  z-index: 1000; /* Ensures it stays on top */
+  display: flex; /* horizontal layout */
+  justify-content: space-between; /* pushes sides apart */
+  align-items: center; /* vertical centering */
+  padding: 15px 40px; /* spacing */
+  background-color: var(--color-brand); /* brand colour */
+  color: #ffffff; /* navbar text */
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* subtle shadow */
+  position: sticky; /* sticks on scroll */
+  top: 0; /* top position */
+  z-index: 1000; /* above content */
 }
 
-/* LEFT SIDE: Logo & Search */
 .nav-left {
-  display: flex;
-  align-items: center;
-  gap: 30px; /* Nice space between logo and search */
+  display: flex; /* aligns children */
+  align-items: center; /* vertical centering */
+  gap: 30px; /* spacing */
 }
 
 .logo img {
-  display: block;
-  height: 50px;
-  width: auto;
-  transition: transform 0.3s ease; /* Smooth hover effect for logo */
+  display: block; /* removes inline gaps */
+  height: 50px; /* logo size */
+  width: auto; /* keeps aspect ratio */
+  transition: transform 0.3s ease; /* smooth hover */
 }
 
 .logo img:hover {
-  transform: scale(1.05); /* Slight grow effect on logo */
+  transform: scale(1.05); /* slight zoom */
+}
+
+.search-bar {
+  display: flex; /* keeps inputs aligned */
+  align-items: center; /* vertical centering */
 }
 
 #tutorSearch {
-  width: 300px;
-  padding: 10px 20px;
-  border-radius: 25px; /* Pill shape */
-  border: none;
-  outline: none;
-  font-size: 14px;
-  transition: box-shadow 0.3s ease;
+  width: 300px; /* search width */
+  padding: 10px 20px; /* spacing */
+  border-radius: 25px; /* pill shape */
+  border: none; /* removes border */
+  outline: none; /* removes default outline */
+  font-size: 14px; /* readable */
+  transition: box-shadow 0.3s ease; /* focus glow */
 }
 
 #tutorSearch:focus {
-  box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.4); /* Glow when clicking search */
+  box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.4); /* white glow */
 }
 
-/* RIGHT SIDE: Navigation Links */
+.search-bar select {
+  padding: 10px 14px; /* spacing */
+  border-radius: 25px; /* pill shape */
+  border: none; /* clean look */
+  outline: none; /* remove default outline */
+  font-size: 14px; /* match input */
+}
+
 .nav-links {
-  display: flex;
-  align-items: center;
-  gap: 30px;
+  display: flex; /* horizontal links */
+  align-items: center; /* vertical centering */
+  gap: 30px; /* spacing */
 }
 
 .nav-links a {
-  color: white;
-  text-decoration: none;
-  font-weight: 600;
-  font-size: 16px;
-  position: relative;
-  transition: opacity 0.3s;
+  color: #ffffff; /* link colour */
+  text-decoration: none; /* no underline */
+  font-weight: 600; /* bold */
+  font-size: 16px; /* size */
+  transition: opacity 0.3s ease; /* hover fade */
 }
 
 .nav-links a:hover {
-  opacity: 0.8; /* Slight fade on hover */
+  opacity: 0.85; /* hover */
 }
 
-/* HAMBURGER MENU (Hidden on Desktop) */
 .menu-toggle {
-  display: none;
+  display: none; /* hidden on desktop */
+  background: none; /* transparent */
+  border: none; /* no border */
+  cursor: pointer; /* pointer */
 }
 
 /* ========================================= */
-/* HERO SECTION (Main Banner) */
+/* HERO SECTION                               */
 /* ========================================= */
+
 .hero {
-  text-align: center;
-  padding: 80px 20px; /* More vertical space */
-  background: white;
-  margin-bottom: 20px;
+  text-align: center; /* centers text */
+  padding: 80px 20px; /* spacing */
+  background: #ffffff; /* white section */
+  margin-bottom: 20px; /* spacing */
 }
 
 .hero h1 {
-  font-size: 2.5rem; /* Bigger title */
-  margin-bottom: 10px;
-  color: #2c3e50;
+  font-size: 2.5rem; /* large heading */
+  margin-bottom: 10px; /* spacing */
+  color: #2c3e50; /* heading colour */
 }
 
 .hero p {
-  font-size: 1.2rem;
-  color: #666;
-  margin-bottom: 25px;
+  font-size: 1.2rem; /* readable */
+  color: var(--color-muted); /* muted text */
+  margin-bottom: 25px; /* spacing */
 }
 
 .hero a {
-  /* "Get Started" Button Style */
-  display: inline-block;
-  padding: 15px 40px;
-  background-color: #4a90d9;
-  color: white;
-  text-decoration: none;
-  border-radius: 30px;
-  font-weight: bold;
-  font-size: 1.1rem;
+  display: inline-block; /* button-like */
+  padding: 15px 40px; /* spacing */
+  background-color: var(--color-accent); /* button colour */
+  color: #ffffff; /* button text */
+  text-decoration: none; /* no underline */
+  border-radius: 30px; /* pill */
+  font-weight: 700; /* bold */
+  font-size: 1.1rem; /* size */
   transition:
-    background-color 0.3s,
-    transform 0.2s;
-  box-shadow: 0 4px 6px rgba(74, 144, 217, 0.3);
+    background-color 0.3s ease,
+    transform 0.2s ease; /* hover */
+  box-shadow: 0 4px 6px rgba(74, 144, 217, 0.3); /* shadow */
 }
 
 .hero a:hover {
-  background-color: #357abd; /* Darker blue on hover */
-  transform: translateY(-2px); /* Slight lift */
+  background-color: var(--color-accent-dark); /* hover colour */
+  transform: translateY(-2px); /* lift */
 }
 
 /* ========================================= */
-/* TUTOR CARDS & GRID */
+/* REUSABLE CARDS / FORMS                     */
 /* ========================================= */
-.tutors-section h2 {
-  text-align: center;
-  font-size: 2rem;
-  margin-bottom: 40px;
-  color: #333;
-}
 
-.tutor-grid {
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
-  gap: 30px; /* Better spacing between cards */
-  padding: 20px 40px;
-  max-width: 1200px;
-  margin: 0 auto; /* Centers the whole grid */
-}
-
-.tutor-card {
-  background: white;
-  border-radius: 15px; /* Softer corners */
-  padding: 25px;
-  width: 320px; /* Slightly wider cards */
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05); /* Soft shadow */
-  display: flex;
-  align-items: center;
-  gap: 20px;
-  transition:
-    transform 0.3s ease,
-    box-shadow 0.3s ease; /* ANIMATION SETUP */
-  border: 1px solid #eee; /* Very subtle border */
-}
-
-/* consistency across the website */
 .card-form {
-  /* reusable form container style */
-  max-width: 450px; /* keeps forms readable */
-  margin: 20px auto; /* centers the form */
-  text-align: left; /* aligns labels left */
-  background: #ffffff; /* white card background */
-  padding: 30px; /* inner spacing */
-  border-radius: 10px; /* rounded corners */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* subtle shadow */
-} /* ends card-form */
-
-/* HOVER EFFECT: THIS MAKES THEM FLOAT */
-.tutor-card:hover {
-  transform: translateY(-10px); /* Moves up 10 pixels */
-  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15); /* Shadow gets bigger */
-  border-color: #4a90d9; /* Border turns blue */
-}
-
-.tutor-thumb {
-  width: 80px;
-  height: 80px;
-  border-radius: 50%;
-  object-fit: cover;
-  border: 3px solid #e0e0e0; /* Grey border around image */
-}
-
-.tutor-info h3 {
-  margin-bottom: 5px;
-  color: #222;
-  font-size: 1.2rem;
-}
-
-.tutor-info p {
-  font-size: 0.95rem;
-  color: #555;
-  line-height: 1.4;
-}
-
-/* ========================================= */
-/* FOOTER */
-/* ========================================= */
-.footer {
-  background-color: #2c3e50; /* Darker, more professional grey */
-  color: white;
-  text-align: center;
-  padding: 40px 20px;
-  margin-top: 60px;
-}
-
-.footer p {
-  margin-bottom: 10px;
-  opacity: 0.8;
+  max-width: 450px; /* readable width */
+  margin: 20px auto; /* centered */
+  text-align: left; /* labels left */
+  background: #ffffff; /* card background */
+  padding: 30px; /* spacing */
+  border-radius: var(--radius-md); /* rounding */
+  box-shadow: var(--shadow-sm); /* shadow */
 }
 
 .help-text {
-  /* styles small helper text under fields */
-  margin-top: 6px; /* adds spacing */
-  margin-bottom: 10px; /* adds spacing */
+  margin-top: 6px; /* spacing */
+  margin-bottom: 10px; /* spacing */
   color: #555555; /* readable grey */
-  font-size: 0.95rem; /* slightly smaller than body text */
-} /* ends help-text */
+  font-size: 0.95rem; /* smaller text */
+}
+
+.btn {
+  display: inline-block; /* consistent sizing */
+  padding: 12px 18px; /* spacing */
+  background: var(--color-accent); /* colour */
+  color: #ffffff; /* text */
+  text-decoration: none; /* no underline */
+  border: none; /* clean */
+  border-radius: var(--radius-sm); /* rounding */
+  font-weight: 700; /* bold */
+  cursor: pointer; /* pointer */
+}
+
+.btn:hover {
+  background: var(--color-accent-dark); /* hover */
+}
+
+/* ========================================= */
+/* TUTOR GRID + STANDARD TUTOR CARDS          */
+/* ========================================= */
+
+.tutors-section h2 {
+  text-align: center; /* center heading */
+  font-size: 2rem; /* size */
+  margin-bottom: 40px; /* spacing */
+  color: var(--color-text); /* colour */
+}
+
+.tutor-grid {
+  display: flex; /* flex layout */
+  justify-content: center; /* centers items */
+  flex-wrap: wrap; /* wraps */
+  gap: 30px; /* spacing */
+  padding: 20px 40px; /* spacing */
+  max-width: 1200px; /* width limit */
+  margin: 0 auto; /* center container */
+}
+
+/* standard card (used on quiz page + can be used elsewhere) */
+.tutor-card {
+  background: #ffffff; /* card background */
+  border-radius: var(--radius-lg); /* rounding */
+  padding: 25px; /* spacing */
+  width: 320px; /* width */
+  box-shadow: var(--shadow-md); /* shadow */
+  border: 1px solid #eeeeee; /* subtle border */
+}
+
+/* only apply “float” hover to NON-flip cards */
+.tutor-card:not(.tutor-card--flip):hover {
+  transform: translateY(-10px); /* lift */
+  box-shadow: var(--shadow-lg); /* deeper shadow */
+  border-color: var(--color-accent); /* accent border */
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease; /* smooth */
+}
+
+/* ========================================= */
+/* FLIP TUTOR CARDS (HOME PAGE ONLY)          */
+/* ========================================= */
+
+/* flip container (adds 3D depth) */
+.tutor-card--flip {
+  background-color: transparent; /* transparent container */
+  padding: 0; /* remove padding */
+  border: none; /* remove border */
+  box-shadow: none; /* remove shadow */
+  height: 200px; /* fixed height */
+  perspective: 1000px; /* 3D depth */
+  cursor: pointer; /* clickable */
+}
+
+/* inner wrapper (does the rotation) */
+.tutor-card--flip .tutor-card-inner {
+  position: relative; /* positions faces */
+  width: 100%; /* full width */
+  height: 100%; /* full height */
+  transform-style: preserve-3d; /* enables 3D */
+  transition: transform 0.6s ease; /* flip speed */
+  border-radius: var(--radius-lg); /* rounding */
+  box-shadow: var(--shadow-sm); /* shadow */
+}
+
+/* flip state */
+.tutor-card--flip.is-flipped .tutor-card-inner {
+  transform: rotateY(180deg); /* flips card */
+}
+
+/* shared face styles */
+.tutor-card--flip .tutor-card-front,
+.tutor-card--flip .tutor-card-back {
+  position: absolute; /* overlay faces */
+  width: 100%; /* full width */
+  height: 100%; /* full height */
+  backface-visibility: hidden; /* hides backface */
+  -webkit-backface-visibility: hidden; /* safari support */
+  border-radius: var(--radius-lg); /* rounding */
+  background: #ffffff; /* face background */
+  display: flex; /* layout */
+  align-items: center; /* centering */
+  padding: 20px; /* spacing */
+  gap: 15px; /* spacing */
+  box-sizing: border-box; /* predictable sizing */
+}
+
+/* back face */
+.tutor-card--flip .tutor-card-back {
+  background: var(--color-brand); /* blue back */
+  color: #ffffff; /* text colour */
+  transform: rotateY(180deg); /* reversed */
+  flex-direction: column; /* stack text */
+  justify-content: center; /* center text */
+}
+
+/* thumbnail only relevant to flip front face */
+.tutor-card--flip .tutor-thumb {
+  width: 80px; /* size */
+  height: 80px; /* size */
+  border-radius: 50%; /* circle */
+  object-fit: cover; /* crop */
+  border: 3px solid #e0e0e0; /* border */
+}
+
+/* info text styles */
+.tutor-info h3 {
+  margin-bottom: 5px; /* spacing */
+  color: #222222; /* text */
+  font-size: 1.2rem; /* size */
+}
+
+.tutor-info p {
+  font-size: 0.95rem; /* size */
+  color: #555555; /* colour */
+  line-height: 1.4; /* spacing */
+}
+
+/* ========================================= */
+/* ABOUT PAGE / CONTENT LAYOUT                */
+/* ========================================= */
+
+.content-wrapper {
+  max-width: 1100px; /* readable width */
+  margin: 0 auto; /* center */
+  padding: 40px 20px; /* spacing */
+}
+
+.split-section {
+  display: flex; /* side-by-side */
+  align-items: center; /* vertical alignment */
+  gap: 40px; /* spacing */
+  margin-bottom: 60px; /* spacing */
+}
+
+.mission-box {
+  background: #ffffff; /* background */
+  padding: 40px; /* spacing */
+  border-left: 10px solid var(--color-brand); /* accent bar */
+  border-radius: 8px; /* rounding */
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05); /* shadow */
+}
+
+/* approach rows (01/02/03) */
+.approach-item {
+  display: grid; /* grid layout */
+  grid-template-columns: 80px 1fr; /* number + content */
+  gap: 20px; /* spacing */
+  padding: 40px 0; /* spacing */
+  border-bottom: 1px solid #eeeeee; /* divider */
+  align-items: center; /* align items */
+}
+
+.approach-number {
+  font-size: 3rem; /* big number */
+  font-weight: 200; /* thin */
+  color: #dddddd; /* light */
+}
+
+/* ========================================= */
+/* SUBJECT GRID (ABOUT PAGE)                  */
+/* ========================================= */
+
+.subject-grid {
+  display: grid; /* grid layout */
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* responsive */
+  gap: 25px; /* spacing */
+}
+
+.subject-card {
+  background: #ffffff; /* background */
+  border-radius: 12px; /* rounding */
+  overflow: hidden; /* keeps image clipped */
+  border: 1px solid #eeeeee; /* border */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05); /* shadow */
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease; /* hover */
+}
+
+.subject-card:hover {
+  transform: translateY(-5px); /* lift */
+  box-shadow: 0 10px 20px rgba(59, 126, 196, 0.1); /* glow */
+  border-color: var(--color-brand); /* accent border */
+}
+
+.subject-img {
+  width: 100%; /* full width */
+  height: 200px; /* fixed height */
+  background-size: cover; /* fills area */
+  background-position: center; /* centers image */
+  background-repeat: no-repeat; /* prevents tiling */
+  background-color: #eef2f7; /* fallback colour */
+  border-bottom: 1px solid #eeeeee; /* divider */
+}
+
+.subject-info {
+  padding: 20px; /* spacing */
+  text-align: center; /* center */
+}
+
+.subject-info h3 {
+  font-size: 1.4rem; /* size */
+  color: var(--color-text); /* colour */
+  margin: 0; /* reset */
+}
+
+/* ========================================= */
+/* FOOTER                                     */
+/* ========================================= */
+
+.footer {
+  background-color: var(--color-footer); /* footer bg */
+  color: #ffffff; /* footer text */
+  text-align: center; /* centered */
+  padding: 40px 20px; /* spacing */
+  margin-top: 60px; /* spacing */
+}
+
+.footer p {
+  margin-bottom: 10px; /* spacing */
+  opacity: 0.85; /* softer */
+}
+
+/* ========================================= */
+/* REDUCED MOTION                             */
+/* ========================================= */
 
 @media (prefers-reduced-motion: reduce) {
-  /* respects user motion settings */
   * {
-    /* targets all elements */
     scroll-behavior: auto; /* disables smooth scrolling */
-    transition: none !important; /* removes transitions that can cause motion */
-    animation: none !important; /* removes animations that can cause motion */
-  } /* ends universal rule */
-} /* ends media query */
+    transition: none !important; /* removes transitions */
+    animation: none !important; /* removes animations */
+  }
+}
+
 /* ========================================= */
-/* MOBILE RESPONSIVENESS */
+/* MOBILE RESPONSIVENESS                      */
 /* ========================================= */
+
 @media (max-width: 768px) {
   .navbar {
-    padding: 15px 20px;
+    padding: 15px 20px; /* tighter padding */
   }
 
   .nav-left {
-    gap: 15px;
-    width: 100%; /* Ensures search bar can shrink properly */
+    gap: 15px; /* smaller gap */
+    width: 100%; /* allow shrink */
   }
 
-  /* Search bar shrinks on mobile but stays visible */
   #tutorSearch {
-    width: 100%;
-    max-width: 180px; /* Prevents it from hitting the logo */
-    padding: 8px 15px;
-    font-size: 13px;
+    width: 100%; /* fill available */
+    max-width: 180px; /* prevents collision */
+    padding: 8px 15px; /* smaller padding */
+    font-size: 13px; /* smaller text */
   }
 
   .logo img {
-    height: 40px; /* Slightly smaller logo on mobile */
+    height: 40px; /* smaller logo */
   }
 
-  /* Hamburger Menu Button */
   .menu-toggle {
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-    background: none;
-    border: none;
-    cursor: pointer;
-    margin-left: 20px; /* Pushes it away from search */
+    display: flex; /* show hamburger */
+    flex-direction: column; /* stack bars */
+    gap: 6px; /* spacing */
+    margin-left: 20px; /* spacing */
   }
 
   .bar {
-    width: 28px;
-    height: 3px;
-    background-color: white;
-    border-radius: 3px;
-    transition: 0.3s;
+    width: 28px; /* bar width */
+    height: 3px; /* bar height */
+    background-color: #ffffff; /* bar colour */
+    border-radius: 3px; /* rounded */
+    transition: 0.3s ease; /* smooth */
   }
 
-  /* Mobile Dropdown Menu */
   .nav-links {
-    display: none;
-    flex-direction: column;
-    position: absolute;
-    top: 100%;
-    left: 0;
-    width: 100%;
-    background-color: #3b7ec4;
-    padding: 20px 0;
-    text-align: center;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    gap: 20px;
+    display: none; /* hidden by default */
+    flex-direction: column; /* stacked links */
+    position: absolute; /* dropdown */
+    top: 100%; /* below navbar */
+    left: 0; /* align left */
+    width: 100%; /* full width */
+    background-color: var(--color-brand); /* bg */
+    padding: 20px 0; /* spacing */
+    text-align: center; /* centered */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* shadow */
+    gap: 20px; /* spacing */
   }
 
   .nav-links.active {
-    display: flex;
+    display: flex; /* show menu */
+  }
+
+  .split-section {
+    flex-direction: column; /* stack on mobile */
+    align-items: stretch; /* full width */
   }
 }

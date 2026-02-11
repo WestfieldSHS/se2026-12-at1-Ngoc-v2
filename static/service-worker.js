@@ -1,12 +1,11 @@
-// Names the cache. I bumped the version to v8 to force a refresh.
+// chache everytime you update so service worker knows that you updated
 const CACHE_NAME = "tutor-app-v8";
 
-// Lists files to cache. CRITICAL: style.css is here!
 const FILES_TO_CACHE = [
   "/",
   "/static/offline.html",
   "/static/manifest.json",
-  "/static/css/style.css", // <--- THIS is what fixes the ugly offline mode
+  "/static/css/style.css",
   "/static/images/icon.png",
   "/static/images/john.jpg",
   "/static/images/jane.jpg",

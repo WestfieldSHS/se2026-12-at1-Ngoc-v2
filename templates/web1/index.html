@@ -58,7 +58,7 @@
           <input
             type="text"
             id="tutorSearch"
-            placeholder="Search tutors..."
+            placeholder="Search tutors/courses..."
             onkeyup="filterTutors()"
             aria-label="Search our tutor database by name"
           />
@@ -106,7 +106,9 @@
       <!-- Starts the main content area with an ID for the skip link -->
       <section class="hero" aria-labelledby="hero-heading">
         <!-- Starts the hero banner section -->
-        <h1 id="hero-heading">Personalise Your Learnings</h1>
+        <h1 id="hero-heading">
+          Personalise Your Learnings- Elite tutoring center
+        </h1>
         <!-- Main heading text -->
         <p>Find the perfect tutor for your learning style</p>
         <!-- Subtitle text -->
@@ -134,31 +136,56 @@
         <h2 style="text-align: center; margin-bottom: 20px">
           Featured Tutors:
         </h2>
+
+        <!-- Hidden message that appears if search has no matches -->
+        <p
+          id="no-results-msg"
+          style="
+            display: none;
+            text-align: center;
+            color: red;
+            font-weight: bold;
+            margin-top: 20px;
+          "
+        >
+          No results found. Please try a different name or course.
+        </p>
         <!-- Heading for the tutor list -->
         <div class="tutor-grid">
-          <!-- Grid container to hold tutor cards -->
           {% for tutor in tutors %}
-          <!-- Starts a Jinja2 loop to go through each tutor in the database -->
-          <div class="tutor-card" role="article">
-            <!-- Individual card for a single tutor -->
-            <img
-              src="/static/images/{{ tutor['photo_url'] }}"
-              alt="Profile picture of {{ tutor['full_name'] }}"
-              class="tutor-thumb"
-            />
-            <!-- Displays the tutor's photo -->
-            <div class="tutor-info">
-              <!-- Container for tutor text details -->
-              <h3>{{ tutor['full_name'] }}</h3>
-              <!-- Displays the tutor's name -->
-              <p>{{ tutor['bio'] }}</p>
-              <!-- Displays the tutor's biography -->
+          <!-- Added onclick event to toggle the flip animation -->
+          <div
+            class="tutor-card tutor-card--flip"
+            onclick="this.classList.toggle('is-flipped')"
+            role="button"
+            aria-label="Click to see tutor stats"
+          >
+            <div class="tutor-card-inner">
+              <!-- FRONT OF CARD -->
+              <div class="tutor-card-front">
+                <img
+                  src="/static/images/{{ tutor['photo_url'] }}"
+                  alt="{{ tutor['full_name'] }}"
+                  class="tutor-thumb"
+                />
+                <div class="tutor-info" style="text-align: left">
+                  <h3>{{ tutor['full_name'] }}</h3>
+                  <p>{{ tutor['bio'] }}</p>
+                </div>
+              </div>
+
+              <!-- BACK OF CARD -->
+              <div class="tutor-card-back">
+                <h3>Tutor Stats</h3>
+                <p><strong>ATAR achieved:</strong> {{ tutor['atar'] }}</p>
+                <p><strong>Contact:</strong> {{ tutor['email'] }}</p>
+                <p style="font-size: 0.8rem; margin-top: 10px">
+                  Click again to flip back
+                </p>
+              </div>
             </div>
-            <!-- Ends the tutor info container -->
           </div>
-          <!-- Ends the tutor card div -->
           {% endfor %}
-          <!-- Ends the Jinja2 loop -->
         </div>
         <!-- Ends the tutor grid -->
       </section>
@@ -172,31 +199,50 @@
       <!-- Helper text -->
       <p>Phone: 0400 000 000 | Email: info@tutors.com</p>
       <!-- Contact information -->
+      <p>&copy; 2024 Personalise Learning. All Rights Reserved.</p>
     </footer>
     <!-- Ends the footer section -->
 
+    <!-- JavaScript Scripts -->
     <script>
-      // Starts the script for filtering tutors
+      // Function to filter tutors based on search input
       function filterTutors() {
-        // Function to filter tutor cards based on search input
-        let input = document.getElementById("tutorSearch").value.toLowerCase(); // Gets the text from the search bar and makes it lowercase
-        let cards = document.getElementsByClassName("tutor-card"); // Gets all the tutor card elements
+        // Get the text typed into the search bar
+        let input = document.getElementById("tutorSearch").value.toLowerCase();
+        // Get all elements with the class "tutor-card"
+        let cards = document.getElementsByClassName("tutor-card");
+        // Get the "No Results" message element
+        let noResultsMsg = document.getElementById("no-results-msg");
+        // Create a variable to track if we found ANY matching cards
+        let hasMatches = false;
+
+        // Loop through every single tutor card
         for (let i = 0; i < cards.length; i++) {
-          // Loops through every tutor card
-          let name = cards[i]
-            .getElementsByTagName("h3")[0]
-            .innerText.toLowerCase(); // Finds the name inside the H3 tag of the current card
-          if (name.includes(input)) {
-            // Checks if the name contains the search text
-            cards[i].style.display = ""; // Shows the card if it matches
+          // Get all the text inside the current card (Name AND Bio/Course)
+          let cardText = cards[i].innerText.toLowerCase();
+
+          // Check if the card text contains the search input
+          if (cardText.includes(input)) {
+            // If it matches, show the card
+            cards[i].style.display = "";
+            // Set our tracker to true because we found a match
+            hasMatches = true;
           } else {
-            // If the name does not match
-            cards[i].style.display = "none"; // Hides the card
-          } // Ends the if-else block
-        } // Ends the for loop
-      } // Ends the filterTutors function
+            // If it does not match, hide the card
+            cards[i].style.display = "none";
+          }
+        }
+
+        // After checking all cards, check if we found any matches
+        if (hasMatches) {
+          // If we found matches, hide the error message
+          noResultsMsg.style.display = "none";
+        } else {
+          // If no matches were found, show the error message
+          noResultsMsg.style.display = "block";
+        }
+      }
     </script>
-    <!-- Ends the search script -->
 
     <script>
       // Starts the Service Worker registration script

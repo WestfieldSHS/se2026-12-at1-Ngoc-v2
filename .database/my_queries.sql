@@ -1,46 +1,71 @@
 PRAGMA foreign_keys = ON; -- Turns on link safety for the database
---add a group by and order by--
-BEGIN TRANSACTION;  --as long as everything is good it will sent the update-- 
-    CREATE TABLE IF NOT EXISTS courses ( -- Starts creating the courses table
-    course_id INTEGER PRIMARY KEY AUTOINCREMENT, -- Unique ID for the course
-    course_name TEXT NOT NULL -- The name of the subject
-    ); -- Ends the courses table
-    CREATE TABLE IF NOT EXISTS traits ( -- Starts creating the traits table
-    trait_id INTEGER PRIMARY KEY AUTOINCREMENT, -- Unique ID for the trait
-    trait_name TEXT NOT NULL -- The name of the personality trait
-    ); -- Ends the traits table
-    CREATE TABLE IF NOT EXISTS tutors ( -- Starts creating the tutors table
-    tutor_id INTEGER PRIMARY KEY AUTOINCREMENT, -- Unique ID for the tutor
-    full_name TEXT NOT NULL, -- The tutor's name
-    photo_url TEXT, -- The name of the image file
-    bio TEXT -- The biography of the tutor
-    ); -- Ends the tutors table
-    CREATE TABLE IF NOT EXISTS tutor_traits ( -- Starts the tutor-trait link table
-    tutor_id INTEGER, -- Stores the tutor ID
-    trait_id INTEGER, -- Stores the trait ID
-    PRIMARY KEY (tutor_id, trait_id), -- Sets a combined unique ID
-    FOREIGN KEY (tutor_id) REFERENCES tutors(tutor_id), -- Links to tutors table
-    FOREIGN KEY (trait_id) REFERENCES traits(trait_id) -- Links to traits table (NO COMMA HERE)
-    ); -- Ends the link table
-    CREATE TABLE IF NOT EXISTS students ( -- Starts the student registration table
-    student_id INTEGER PRIMARY KEY AUTOINCREMENT, -- Unique ID for the student
-    name TEXT NOT NULL, -- The name of the student
-    email TEXT NOT NULL UNIQUE, -- Unique email address
-    username TEXT NOT NULL UNIQUE, -- Unique login name
-    password_hash TEXT NOT NULL, -- The secured password hash
-    course_id INTEGER, -- Link to the course ID
-    time_slot TEXT, -- Preferred study time
-    selected_tutor_id INTEGER, -- Link to the tutor ID
-    FOREIGN KEY (course_id) REFERENCES courses(course_id), -- Links to courses table
-    FOREIGN KEY (selected_tutor_id) REFERENCES tutors(tutor_id) -- Links to tutors table (NO COMMA HERE)
-    ); -- Ends the students table
-    INSERT OR IGNORE INTO courses (course_id, course_name) VALUES (1, 'Maths'), (2, 'English'), (3, 'Science'), (4, 'History'); -- Adds subject data
-    INSERT OR IGNORE INTO traits (trait_id, trait_name) VALUES (1, 'Gentle'), (2, 'Strict'), (3, 'Patient'), (4, 'Fun'), (5, 'Expert'); -- Adds trait data
-    INSERT OR IGNORE INTO tutors (tutor_id, full_name, photo_url, bio) VALUES (1, 'John Doe', 'john.jpg', 'Maths specialist for visual learners.'); -- Adds John Doe
-    INSERT OR IGNORE INTO tutors (tutor_id, full_name, photo_url, bio) VALUES (2, 'Jane Smith', 'jane.jpg', 'English specialist with strict focus.'); -- Adds Jane Smith
-    INSERT OR IGNORE INTO tutors (tutor_id, full_name, photo_url, bio) VALUES (3, 'Mike Ross', 'mike.jpg', 'Science is fun and very interactive!'); -- Adds Mike Ross
-    INSERT OR IGNORE INTO tutors (tutor_id, full_name, photo_url, bio) VALUES (4, 'Sarah Lee', 'sarah.jpg', 'History buff and exam prep expert.'); -- Adds Sarah Lee
-    INSERT OR IGNORE INTO tutor_traits (tutor_id, trait_id) VALUES (1, 1), (1, 3), (2, 2), (2, 5), (3, 4), (3, 1), (4, 5), (4, 2); -- Links tutors to traits
+
+BEGIN TRANSACTION; 
+    -- 1. Create Courses Table
+    CREATE TABLE IF NOT EXISTS courses ( 
+    course_id INTEGER PRIMARY KEY AUTOINCREMENT, 
+    course_name TEXT NOT NULL 
+    ); 
+
+    -- 2. Create Traits Table
+    CREATE TABLE IF NOT EXISTS traits ( 
+    trait_id INTEGER PRIMARY KEY AUTOINCREMENT, 
+    trait_name TEXT NOT NULL 
+    ); 
+
+    -- 3. Create Tutors Table (UPDATED with email and atar)
+    CREATE TABLE IF NOT EXISTS tutors ( 
+    tutor_id INTEGER PRIMARY KEY AUTOINCREMENT, 
+    full_name TEXT NOT NULL, 
+    photo_url TEXT, 
+    bio TEXT,
+    email TEXT, -- Added for contact info
+    atar REAL    -- Added for stats
+    ); 
+
+    -- 4. Create Link Table
+    CREATE TABLE IF NOT EXISTS tutor_traits ( 
+    tutor_id INTEGER, 
+    trait_id INTEGER, 
+    PRIMARY KEY (tutor_id, trait_id), 
+    FOREIGN KEY (tutor_id) REFERENCES tutors(tutor_id), 
+    FOREIGN KEY (trait_id) REFERENCES traits(trait_id) 
+    ); 
+
+    -- 5. Create Students Table
+    CREATE TABLE IF NOT EXISTS students ( 
+    student_id INTEGER PRIMARY KEY AUTOINCREMENT, 
+    name TEXT NOT NULL, 
+    email TEXT NOT NULL UNIQUE, 
+    username TEXT NOT NULL UNIQUE, 
+    password_hash TEXT NOT NULL, 
+    course_id INTEGER, 
+    time_slot TEXT, 
+    selected_tutor_id INTEGER, 
+    FOREIGN KEY (course_id) REFERENCES courses(course_id), 
+    FOREIGN KEY (selected_tutor_id) REFERENCES tutors(tutor_id) 
+    ); 
+
+    -- DATA INSERTION
+    INSERT OR IGNORE INTO courses (course_id, course_name) VALUES (1, 'Maths'), (2, 'English'), (3, 'Science'), (4, 'History'); 
+    INSERT OR IGNORE INTO traits (trait_id, trait_name) VALUES (1, 'Gentle'), (2, 'Strict'), (3, 'Patient'), (4, 'Fun'), (5, 'Expert'); 
+
+    -- TUTOR DATA (Now including email and ATAR)
+    INSERT OR IGNORE INTO tutors (tutor_id, full_name, photo_url, bio, email, atar) VALUES 
+    (1, 'John Doe', 'john.jpg', 'Maths specialist for visual learners.', 'john.d@tutors.com', 99.10),
+    (2, 'Jane Smith', 'jane.jpg', 'English specialist with strict focus.', 'jane.s@tutors.com', 98.50),
+    (3, 'Mike Ross', 'mike.jpg', 'Science is fun and very interactive!', 'mike.r@tutors.com', 97.40),
+    (4, 'Sarah Lee', 'sarah.jpg', 'History buff and exam prep expert.', 'sarah.l@tutors.com', 99.20),
+    (5, 'Emily Chen', 'emily.jpg', 'Chemistry expert helping you understand formulas.', 'emily.c@tutors.com', 98.80),
+    (6, 'David Wilson', 'david.jpg', 'Physics specialist with a focus on motion.', 'david.w@tutors.com', 99.00),
+    (7, 'Jessica Taylor', 'jessica.jpg', 'Biology tutor who makes anatomy easy.', 'jessica.t@tutors.com', 97.90),
+    (8, 'Robert Brown', 'robert.jpg', 'Economics guide for HSC success.', 'robert.b@tutors.com', 98.40),
+    (9, 'Chris Evans', 'chris.jpg', 'HSC Advanced and Extension Maths expert.', 'c.evans@tutors.com', 99.95); -- NEW MATHS TUTOR
+
+    -- LINKING TRAITS
+    INSERT OR IGNORE INTO tutor_traits (tutor_id, trait_id) VALUES 
+    (1, 1), (1, 3), (2, 2), (2, 5), (3, 4), (3, 1), (4, 5), (4, 2), 
+    (5, 5), (5, 3), (6, 2), (6, 5), (7, 1), (7, 4), (8, 3), (9, 5);
 COMMIT;
 
 --test queries:-- 

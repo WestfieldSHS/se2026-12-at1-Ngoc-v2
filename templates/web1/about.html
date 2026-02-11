@@ -1,71 +1,35 @@
 <!doctype html>
-<!-- Declares this document as an HTML5 file -->
 <html lang="en">
-  <!-- Starts the HTML document and sets language to English -->
   <head>
-    <!-- Starts metadata section -->
     <meta charset="UTF-8" />
-    <!-- Sets character encoding -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <!-- Ensures mobile responsiveness -->
-    <title>About Us - Our Tutors</title>
-    <!-- Sets browser tab title -->
-    <link rel="manifest" href="/static/manifest.json" />
-    <!-- Links PWA manifest -->
-    <link rel="icon" href="/static/images/icon.png" type="image/png" />
-    <!-- Sets browser tab icon -->
+    <title>About Us - Elite HSC Tutoring</title>
     <link rel="stylesheet" href="/static/css/style.css" />
-    <!-- Links CSS stylesheet -->
   </head>
-  <!-- Ends head section -->
   <body>
-    <!-- Starts visible body -->
-
-    <!-- ACCESSIBILITY: Skip link for keyboard users -->
-    <a
-      href="#main-content"
-      class="skip-link"
-      style="
-        position: absolute;
-        left: -10000px;
-        top: auto;
-        width: 1px;
-        height: 1px;
-        overflow: hidden;
-      "
-      >Skip to main content</a
-    >
-
+    <!-- Navbar Section -->
     <header class="navbar">
-      <!-- Starts Navigation Bar -->
       <div class="nav-left">
-        <!-- Container for Logo and Search -->
         <div class="logo">
-          <!-- Logo container -->
-          <img
-            src="/static/images/icon.png"
-            alt="TutorMatch official logo"
-            height="50"
-          />
-          <!-- Logo image -->
+          <a href="/" aria-label="Return to home page">
+            <!-- The 'img' tag is now a clickable element inside the link -->
+            <img
+              src="/static/images/icon.png"
+              alt="Elite HSC Tutoring Business Logo"
+              height="50"
+            />
+          </a>
         </div>
-        <!-- Ends logo -->
-        <div class="search-bar">
-          <!-- Search input container -->
-          <input
-            type="text"
-            id="tutorSearch"
-            placeholder="Search tutors..."
-            onkeyup="filterTutors()"
-            aria-label="Search our tutor database by name"
-          />
-          <!-- Search input field -->
-        </div>
-        <!-- Ends search bar -->
-      </div>
-      <!-- Ends nav-left -->
 
-      <!-- Hamburger Menu Button -->
+        <div
+          class="brand-tagline"
+          style="margin-left: 15px; font-weight: bold; color: #fff"
+        >
+          Est. 2024 | Professional Coaching
+        </div>
+      </div>
+
+      <!-- ADD THIS BUTTON: The hamburger icon -->
       <button
         class="menu-toggle"
         aria-label="Open navigation menu"
@@ -76,107 +40,311 @@
         <span class="bar"></span>
       </button>
 
-      <!-- Navigation Links -->
-      <nav class="nav-links" id="navLinks" aria-label="Main Site Navigation">
-        <a href="/">Main Menu</a>
-        <!-- Link to Home -->
-        <a href="/account">Apply Now</a>
-        <!-- Link to Account -->
+      <!-- IMPORTANT: Added id="navLinks" so the script can find it -->
+      <nav class="nav-links" id="navLinks">
         <a href="/">Main Menu</a>
         <a href="/account">Apply Now</a>
-        <!-- navigations to help the user know where they are! -->
         <a href="/about" aria-current="page">About Us</a>
-        <!-- Link to About -->
       </nav>
-      <!-- Ends navigation -->
     </header>
-    <!-- Ends header -->
 
     <main id="main-content">
-      <!-- Main content area -->
-      <section class="hero" aria-labelledby="about-heading">
-        <!-- Hero section -->
-        <h1 id="about-heading">Why Choose Us?</h1>
-        <!-- Heading -->
-        <p>We have all the teachers that will personalise your learning!</p>
-        <!-- Description -->
+      <!-- SECTION 1: MISSION (Professional/Online vibe) -->
+      <section class="content-wrapper">
+        <div
+          class="split-section"
+          style="
+            display: flex;
+            gap: 40px;
+            align-items: center;
+            margin-bottom: 60px;
+          "
+        >
+          <div
+            class="mission-box"
+            style="
+              flex: 2;
+              padding: 40px;
+              background: #fff;
+              border-left: 10px solid #3b7ec4;
+              box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+            "
+          >
+            <h2
+              style="
+                color: #3b7ec4;
+                text-transform: uppercase;
+                letter-spacing: 2px;
+                margin-bottom: 10px;
+              "
+            >
+              Our Mission
+            </h2>
+            <h3 style="font-size: 2rem; margin-bottom: 20px">
+              Stop the stress, Heightens the marks
+            </h3>
+            <p style="font-size: 1.1rem; color: #555; line-height: 1.8">
+              Personalise Learning Tutoring was founded by 99.95 ATAR achievers
+              who were tired of seeing smart students "throw" their exams due to
+              bad study habits. We provide the <strong>supports</strong>
+              needed to make your way into top-tier courses.
+            </p>
+          </div>
+          <div
+            style="
+              flex: 1;
+              background: #eef2f7;
+              height: 300px;
+              border-radius: 8px;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              color: #3b7ec4;
+              font-weight: bold;
+            "
+          >
+            <div style="flex: 1; height: 300px">
+              <!-- img tag links the photo. 'alt' is for accessibility/marks -->
+              <img
+                src="/static/images/success.jpg"
+                alt="Students celebrating high ATAR results"
+                style="
+                  width: 100%;
+                  height: 100%;
+                  object-fit: cover;
+                  border-radius: 8px;
+                "
+              />
+            </div>
+          </div>
+        </div>
       </section>
 
-      <section class="tutors-section" aria-label="Tutor Directory">
-        <!-- Tutor list section -->
-        <h2 style="text-align: center; margin-bottom: 20px">
-          All of Our Tutors:
+      <!-- SECTION 2: PROVEN PRINCIPLES (Clean professional student vibe) -->
+      <section class="content-wrapper">
+        <p
+          style="
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: #888;
+            font-size: 0.9rem;
+            margin-bottom: 10px;
+          "
+        >
+          Our Approach
+        </p>
+        <h2 style="font-size: 3rem; margin-bottom: 40px; font-weight: 800">
+          Guiding Students with <br />Proven Principles
         </h2>
-        <div class="tutor-grid">
-          <!-- Grid for cards -->
-          {% for tutor in tutors %}
-          <!-- Jinja2 Loop for tutors -->
-          <div class="tutor-card" role="article">
-            <!-- Card container -->
-            <img
-              src="/static/images/{{ tutor['photo_url'] }}"
-              alt="Profile picture of {{ tutor['full_name'] }}"
-              class="tutor-thumb"
-            />
-            <!-- Tutor Image -->
-            <div class="tutor-info">
-              <!-- Info container -->
-              <h3>{{ tutor['full_name'] }}</h3>
-              <!-- Tutor Name -->
-              <p><strong>About:</strong> {{ tutor['bio'] }}</p>
-              <!-- Tutor Bio -->
-              <p>
-                <!-- Email Link -->
-                <a
-                  href="mailto:{{ tutor['full_name'] | lower | replace(' ', '.') }}@tutors.com"
-                  aria-label="Send an email to {{ tutor['full_name'] }}"
-                >
-                  📧 Contact: {{ tutor['full_name'] | lower | replace(' ', '.')
-                  }}@tutors.com
-                </a>
-              </p>
-            </div>
-            <!-- Ends info -->
+
+        <div
+          class="approach-item"
+          style="
+            display: flex;
+            gap: 30px;
+            padding: 30px 0;
+            border-bottom: 1px solid #eee;
+          "
+        >
+          <div class="approach-number" style="font-size: 2.5rem; color: #ddd">
+            01
           </div>
-          <!-- Ends card -->
-          {% endfor %}
-          <!-- Ends loop -->
+          <div>
+            <h3 style="font-size: 1.6rem; margin-bottom: 5px">
+              Understanding the Student
+            </h3>
+            <p style="color: #666">
+              Identifying cognitive strengths to build a customized roadmap for
+              success.
+            </p>
+          </div>
         </div>
-        <!-- Ends grid -->
+
+        <div
+          class="approach-item"
+          style="
+            display: flex;
+            gap: 30px;
+            padding: 30px 0;
+            border-bottom: 1px solid #eee;
+          "
+        >
+          <div class="approach-number" style="font-size: 2.5rem; color: #ddd">
+            02
+          </div>
+          <div>
+            <h3 style="font-size: 1.6rem; margin-bottom: 5px">
+              Tailored Instructional Design
+            </h3>
+            <p style="color: #666">
+              Deep conceptual mastery specifically adapted to NESA syllabus
+              outcomes.
+            </p>
+          </div>
+        </div>
+
+        <div
+          class="approach-item"
+          style="display: flex; gap: 30px; padding: 30px 0"
+        >
+          <div class="approach-number" style="font-size: 2.5rem; color: #ddd">
+            03
+          </div>
+          <div>
+            <h3 style="font-size: 1.6rem; margin-bottom: 5px">
+              Growth & Exam Strategy
+            </h3>
+            <p style="color: #666">
+              Training in time management and stress reduction for peak exam
+              performance.
+            </p>
+          </div>
+        </div>
       </section>
-      <!-- Ends section -->
+
+      <!-- SECTION 3: SUBJECTS (With Photo Spots) -->
+      <section style="background: #fcfcfc; padding: 80px 0">
+        <div class="content-wrapper">
+          <div style="text-align: center; margin-bottom: 50px">
+            <h2 style="font-size: 2.8rem; font-weight: 800">How We Teach</h2>
+            <p style="color: #666">
+              Expert support across all major HSC streams.
+            </p>
+          </div>
+
+          <div
+            class="subject-grid"
+            style="
+              display: grid;
+              grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+              gap: 25px;
+            "
+          >
+            <!-- MATHS Card -->
+            <div class="subject-card">
+              <div
+                class="subject-img"
+                style="
+                  background-image: url(&quot;/static/images/maths.jpg&quot;);
+                "
+              ></div>
+              <div class="subject-info"><h3>Mathematics</h3></div>
+            </div>
+
+            <!-- ENGLISH Card -->
+            <div class="subject-card">
+              <div
+                class="subject-img"
+                style="
+                  background-image: url(&quot;/static/images/english.jpg&quot;);
+                "
+              ></div>
+              <div class="subject-info"><h3>English</h3></div>
+            </div>
+
+            <!-- SCIENCE Card -->
+            <div class="subject-card">
+              <div
+                class="subject-img"
+                style="
+                  background-image: url(&quot;/static/images/science.jpg&quot;);
+                "
+              ></div>
+              <div class="subject-info"><h3>Science</h3></div>
+            </div>
+
+            <!-- HISTORY Card -->
+            <div class="subject-card">
+              <div
+                class="subject-img"
+                style="
+                  background-image: url(&quot;/static/images/history.jpg&quot;);
+                "
+              ></div>
+              <div class="subject-info"><h3>History</h3></div>
+            </div>
+
+            <!-- PHYSICS Card -->
+            <div class="subject-card">
+              <div
+                class="subject-img"
+                style="
+                  background-image: url(&quot;/static/images/physics.jpg&quot;);
+                "
+              ></div>
+              <div class="subject-info"><h3>Physics</h3></div>
+            </div>
+
+            <!-- CHEMISTRY Card -->
+            <div class="subject-card">
+              <div
+                class="subject-img"
+                style="
+                  background-image: url(&quot;/static/images/chemistry.jpg&quot;);
+                "
+              ></div>
+              <div class="subject-info"><h3>Chemistry</h3></div>
+            </div>
+
+            <!-- BIOLOGY Card -->
+            <div class="subject-card">
+              <div
+                class="subject-img"
+                style="
+                  background-image: url(&quot;/static/images/biology.jpg&quot;);
+                "
+              ></div>
+              <div class="subject-info"><h3>Biology</h3></div>
+            </div>
+
+            <!-- ECONOMICS Card -->
+            <div class="subject-card">
+              <div
+                class="subject-img"
+                style="
+                  background-image: url(&quot;/static/images/economics.jpg&quot;);
+                "
+              ></div>
+              <div class="subject-info"><h3>Economics</h3></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SECTION 4: GRATITUDE (Final CTA) -->
+      <section style="background: #3b7ec4; color: white; padding: 100px 0">
+        <div class="content-wrapper" style="text-align: center">
+          <p
+            style="
+              text-transform: uppercase;
+              letter-spacing: 3px;
+              margin-bottom: 20px;
+              opacity: 0.8;
+            "
+          >
+            Our Gratitude
+          </p>
+          <h2 style="font-size: 3rem; font-weight: 800; line-height: 1.2">
+            We listen, adapt, and grow <br />
+            thanks to the voices of our students, <br />
+            <span style="color: #ffbf47">helping them succeed.</span>
+          </h2>
+        </div>
+      </section>
     </main>
-    <!-- Ends main -->
 
     <footer class="footer">
-      <!-- Footer section -->
       <p>Not sure about something? <strong>Contact us!</strong></p>
       <p>Phone: 0400 000 000 | Email: info@tutors.com</p>
+      <p>&copy; 2024 Personalise Learning. All Rights Reserved.</p>
     </footer>
 
-    <!-- JavaScript Scripts -->
     <script>
-      function filterTutors() {
-        // Search filter logic
-        let input = document.getElementById("tutorSearch").value.toLowerCase();
-        let cards = document.getElementsByClassName("tutor-card");
-        for (let i = 0; i < cards.length; i++) {
-          let name = cards[i]
-            .getElementsByTagName("h3")[0]
-            .innerText.toLowerCase();
-          if (name.includes(input)) {
-            cards[i].style.display = "";
-          } else {
-            cards[i].style.display = "none";
-          }
-        }
-      }
-    </script>
-
-    <script>
-      // Toggle Menu Logic
+      // Function to toggle the mobile menu visibility
       function toggleMenu() {
+        // Finds the navigation links by their ID
         const nav = document.getElementById("navLinks");
+        // Toggles the 'active' class to show/hide the menu in mobile view
         nav.classList.toggle("active");
       }
     </script>
